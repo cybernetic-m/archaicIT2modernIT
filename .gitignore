@@ -172,3 +172,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Configuration files hide because of the groq api_key
+groq_api_key.txt

@@ -1,0 +1,31 @@
+api:
+  key: "groq_api_key.txt"
+
+model:
+  name: "deepseek-r1-distill-llama-70b"
+  temperature: 0.0
+
+prompt:
+  template_1: ("Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno.\n\n" 
+                     "{examples}\n\n" 
+                     "Traduci '{old_sentence}' tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,"
+                     "scrivimi solo la traduzione senza aggiungere altro."
+                     )
+
+  template_2: ("You are an expert Italian linguist. Translate from Old Italian to Modern Italian.\n\n" 
+                    "{examples}\n\n" 
+                    "Translate '{old_sentence}' taking into account the ways of speaking and writing of the medieval and Renaissance periods,"
+                    "just write me the translation without adding anything else."
+                    )
+
+
+data:
+  input_file: "data/dataset_cleaned.cvs"
+  output_file: "data/dataset_cleaned_{model}.csv"
+  examples_file: "data/examples.txt"
+  text_column: "Sentence"
+  translated_column: "Translated"
+
+rate_limit:
+  req_per_min: 30
+
