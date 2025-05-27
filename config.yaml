@@ -10,6 +10,7 @@ prompt:
 
     {examples}
 
+
     Traduci '{old_sentence}' tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,
     scrivimi solo la traduzione senza aggiungere altro.
 
@@ -18,6 +19,7 @@ prompt:
 
     {examples}
 
+    
     Translate '{old_sentence}' taking into account the ways of speaking and writing of the medieval and Renaissance periods,
     just write me the translation without adding anything else.
 
