@@ -4,6 +4,7 @@ api:
 model:
   deepseek: "deepseek-r1-distill-llama-70b"
   gemma: "gemma2-9b-it"
+  llama: "llama-3.1-8b-instant"
   temperature: 0.0
 
 prompt:
