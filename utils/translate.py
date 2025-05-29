@@ -1,6 +1,8 @@
 import requests
 import time
 from typing import Optional
+import pandas as pd
+
 
 def clean_reasoning(text):
 
@@ -75,3 +77,65 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
         except requests.exceptions.RequestException as e:
             print(f"Request failed for: '{user_prompt_template}'\nError: {e}")
             return None
+        
+
+def translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min):
+# This function takes a pandas dataset in input and trannslate all the sentences saving a new dataset with the translations
+# Args: - api_key: <str> the Groq API key you need to authorization
+#       - input_file: <str> the path to the csv file containing the dataset to translate
+#       - model_name: <str> the name of the LLM model (ex. "llama-3.1-8b-instant") 
+#       - prompt_builder: <PromptBuilder> the PromptBuilder object to build the prompts
+#       - temperature: <float> the temperature of the model (0.0 for deterministic output, 1.0 for more creative output)
+#       - req_per_min: <int> the number of API requests per minute to respect the rate limit
+#
+# Output: - None, but the translated dataset is saved in a new csv file with the translations
+
+    df = pd.read_csv(input_file) # Read the input file (CSV format) transforming into a pandas DataFrame
+    
+    seconds_per_request = 60 / req_per_min # calculate the seconds to wait between requests
+
+    if 'Translation' not in df.columns:
+        df['Translation'] = None # Add a new column 'Translation' to the DataFrame if it does not exist with None values
+
+    last_request_time = 0 # Initialize the last request time to 0 at start
+
+    # Iterate over each row in the DataFrame (idx is the index, row is the row data)
+    for idx, row in df.iterrows():
+        # Skip rows that already have a translation
+        # If the 'Translation' column is not NaN, (or None), it means that has the translation, then skip the row
+        if pd.notna(row.get('Translation')):
+            continue  # Skip current iteration for sentence already translated
+
+        sentence = row['Sentence'] # takes the sentence to translate from the 'Sentence' column
+        if not sentence or pd.isna(sentence):
+            continue # Skip empty or NaN sentences
+
+        # Enforce rate limit: measure the current time and check if we need to sleep
+        elapsed = time.time() - last_request_time # Time from the last request
+        if elapsed < seconds_per_request:
+            # If the elapsed time is less than the seconds per request, we need to sleep
+            sleep_time = seconds_per_request - elapsed # Calculate how much time to sleep to respect the rate limit
+            time.sleep(sleep_time)
+
+        # Build the prompt using the PromptBuilder
+        system_prompt_template = prompt_builder.getSystemPrompt() # Get the system prompt from the PromptBuilder    
+        user_prompt_template = prompt_builder.build_prompt(sentence) # Build the user prompt using the PromptBuilder with the sentence to translate
+        lang = prompt_builder.getLang() # Get the language of the prompt from the PromptBuilder
+        mode = prompt_builder.getMode() # Get the mode of the prompt from the PromptBuilder
+
+        # Translate the sentence using the Groq API and cleaning the reasoning
+        translation = clean_reasoning(call_translation_api(api_key=api_key, 
+                                                           model_name=model_name, 
+                                                           system_prompt_template = system_prompt_template,
+                                                           user_prompt_template = user_prompt_template,
+                                                           temperature=temperature
+                                                           ))
+        last_request_time = time.time() # Measure the time of the last request
+
+        # save the translation in the 'Translation' column of the DataFrame at row index = idx
+        df.at[idx, 'Translation'] = translation 
+        print(f"Translated [{idx+1}/{len(df)}]: {sentence} -> {translation}")
+
+    output_file = input_file.split('/')[-1].replace('.csv', f'_{prompt_builder.mode}_{lang}_{model_name}.csv')
+    df.to_csv(output_file, index=False)
+    print(f"Translated dataset saved to {output_file}")

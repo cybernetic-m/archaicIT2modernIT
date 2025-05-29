@@ -5,25 +5,30 @@ model:
   temperature: 0.0
 
 prompt:
+
   system_template_it: >
-   Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno.
+   Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno, tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,
+   scrivimi solo la traduzione senza aggiungere altro.
 
   system_template_en: >
-    You are an expert Italian linguist. Translate from Old Italian to Modern Italian.
+    You are an expert Italian linguist. Translate from Old Italian to Modern Italian, taking into account the ways of speaking and writing of the medieval and Renaissance periods,
+    just write me the translation without adding anything else.
 
   user_template_it: >
     {examples}
 
 
-    Traduci '{old_sentence}' tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,
-    scrivimi solo la traduzione senza aggiungere altro.
+    Antico: '{old_sentence}'
+    Moderno:
 
   template_en: >
     {examples}
 
     
-    Translate '{old_sentence}' taking into account the ways of speaking and writing of the medieval and Renaissance periods,
-    just write me the translation without adding anything else.
+    Archaic: '{old_sentence}'
+    Modern: 
+data:
+  input_file: "data/dataset_cleaned.csv"
 
 rate_limit:
   req_per_min: 30

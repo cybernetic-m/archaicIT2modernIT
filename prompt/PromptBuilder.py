@@ -4,7 +4,7 @@ class PromptBuilder:
 # Args:
 #       - mode: "zero-shot", "few-shot" (set the mode to write [few-shot] or not [zero-shot] examples of translation in the prompt)
 #       - examples: a list of tuples (archaic, modern) of examples to write in the prompt for "few-shot" mode
-#       - prompt_template: a string with parts to be placed as prompt template
+#       - prompt_template: a tuple of strings (system_prompt, user_prompt)
 #       - k: the number of examples to write in the prompt in case of few-shot
 #       - lang: the language of the prompt ('it' or 'en')
 
@@ -13,9 +13,22 @@ class PromptBuilder:
     # Initialize all the args
     self.mode = mode
     self.examples = examples
-    self.prompt_template = prompt_template
+    self.system_prompt = prompt_template[0] # the system prompt is the first element of the tuple
+    self.user_prompt = prompt_template[1] # the user prompt is the second element of the tuple
     self.k = k
     self.lang = lang
+
+  def getSystemPrompt(self):
+    # This method returns the system prompt
+    return self.system_prompt
+  
+  def getLang(self):
+    # This method returns the language of the prompt
+    return self.lang
+  
+  def getMode(self):
+    # This method returns the mode of the prompt
+    return self.mode
 
   def build_prompt(self, old_sentence):
   
@@ -24,7 +37,7 @@ class PromptBuilder:
     if self.mode == "zero-shot":
       # in this case substitute the {old_sentence} in the user prompt with the actual "old_sentence"
       # there are no examples in "zero_shot"
-      return self.prompt_template.format(old_sentence = old_sentence, examples = '') 
+      return self.user_prompt.format(old_sentence = old_sentence, examples = '') 
 
     elif self.mode == "few-shot":
 
@@ -44,7 +57,7 @@ class PromptBuilder:
         for archaic, modern in k_examples:
           examples_text += f"Archaic: '{archaic}'\nModern: '{modern}'\n\n"
 
-      return self.prompt_template.format(old_sentence = old_sentence, examples = examples_text.strip()) #subs also {examples} in the prompt_template with examples_text
+      return self.user_prompt.format(old_sentence = old_sentence, examples = examples_text.strip()) #subs also {examples} in the prompt_template with examples_text
 
     else:
       raise ValueError(f'Mode {self.mode} is not valid. Choose "zero-shot" or "few-shot" instead!')
