@@ -15,7 +15,8 @@ class PromptBuilder:
     self.examples = examples
     self.system_prompt = prompt_template[0] # the system prompt is the first element of the tuple
     self.user_prompt = prompt_template[1] # the user prompt is the second element of the tuple
-    self.k = k
+    if self.mode == 'zero-shot':
+        self.k = 0 # in zero-shot mode, there are no examples to write in the prompt
     self.lang = lang
 
   def getSystemPrompt(self):
@@ -29,6 +30,10 @@ class PromptBuilder:
   def getMode(self):
     # This method returns the mode of the prompt
     return self.mode
+  
+  def getK(self):
+    # This method returns the number of examples to write in the prompt in case of few-shot
+    return self.k
 
   def build_prompt(self, old_sentence):
   

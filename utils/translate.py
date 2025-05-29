@@ -124,6 +124,7 @@ def LLM_translation(api_key, input_file, model_name, prompt_builder, temperature
         user_prompt_template = prompt_builder.build_prompt(sentence) # Build the user prompt using the PromptBuilder with the sentence to translate
         lang = prompt_builder.getLang() # Get the language of the prompt from the PromptBuilder
         mode = prompt_builder.getMode() # Get the mode of the prompt from the PromptBuilder
+        k = prompt_builder.getK() # Get the number of examples to write in the prompt in case of few-shot from the PromptBuilder
 
         # Translate the sentence using the Groq API and cleaning the reasoning
         translation = clean_reasoning(call_translation_api(api_key=api_key, 
@@ -138,8 +139,12 @@ def LLM_translation(api_key, input_file, model_name, prompt_builder, temperature
         df.at[idx, 'Translation'] = translation 
         print(f"Translated [{idx+1}/{len(df)}]: {sentence} -> {translation}")
 
-    # Name as "CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl" 
-    output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}_temp-{temperature}.jsonl')
+    # Name as "CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl"
+    # If k is 0, it means that we are in zero-shot mode, so we save the name do not have k
+    if k == 0:
+        output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}_temp-{temperature}.jsonl')
+    else:
+        output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_k-{k}_{lang}_temp-{temperature}.jsonl')
     output_file = save_path + '/' + output_name # Add the save path to the output file name
     df.to_json(output_file, orient="records", lines=True, force_ascii=False) # Save the DataFrame to a JSONL file 
     print(f"Translated dataset saved to {output_file}")
