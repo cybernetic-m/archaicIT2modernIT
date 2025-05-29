@@ -79,7 +79,7 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
             return None
         
 
-def translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min):
+def translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min, save_path):
 # This function takes a pandas dataset in input and trannslate all the sentences saving a new dataset with the translations
 # Args: - api_key: <str> the Groq API key you need to authorization
 #       - input_file: <str> the path to the csv file containing the dataset to translate
@@ -87,6 +87,7 @@ def translate_dataset(api_key, input_file, model_name, prompt_builder, temperatu
 #       - prompt_builder: <PromptBuilder> the PromptBuilder object to build the prompts
 #       - temperature: <float> the temperature of the model (0.0 for deterministic output, 1.0 for more creative output)
 #       - req_per_min: <int> the number of API requests per minute to respect the rate limit
+#       - save_path: <str> the path where to save the translated dataset
 #
 # Output: - None, but the translated dataset is saved in a new csv file with the translations
 
@@ -136,6 +137,8 @@ def translate_dataset(api_key, input_file, model_name, prompt_builder, temperatu
         df.at[idx, 'Translation'] = translation 
         print(f"Translated [{idx+1}/{len(df)}]: {sentence} -> {translation}")
 
-    output_file = input_file.split('/')[-1].replace('.csv', f'_{prompt_builder.mode}_{lang}_{model_name}.csv')
-    df.to_csv(output_file, index=False)
+    # Name as "CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl" 
+    output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl')
+    output_file = save_path + '/' + output_name # Add the save path to the output file name
+    df.to_json(output_file, orient="records", lines=True, force_ascii=False) # Save the DataFrame to a JSONL file 
     print(f"Translated dataset saved to {output_file}")
