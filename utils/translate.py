@@ -79,7 +79,8 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
             return None
         
 
-def translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min, save_path):
+def llm_translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min, save_path):
+
 # This function takes a pandas dataset in input and trannslate all the sentences saving a new dataset with the translations
 # Args: - api_key: <str> the Groq API key you need to authorization
 #       - input_file: <str> the path to the csv file containing the dataset to translate
@@ -138,7 +139,7 @@ def translate_dataset(api_key, input_file, model_name, prompt_builder, temperatu
         print(f"Translated [{idx+1}/{len(df)}]: {sentence} -> {translation}")
 
     # Name as "CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl" 
-    output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}.jsonl')
+    output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}_{mode}_{lang}_temp-{temperature}.jsonl')
     output_file = save_path + '/' + output_name # Add the save path to the output file name
     df.to_json(output_file, orient="records", lines=True, force_ascii=False) # Save the DataFrame to a JSONL file 
     print(f"Translated dataset saved to {output_file}")
