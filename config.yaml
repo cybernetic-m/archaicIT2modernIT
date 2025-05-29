@@ -5,9 +5,13 @@ model:
   temperature: 0.0
 
 prompt:
-  template_it: >
-    Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno.
+  system_template_it: >
+   Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno.
 
+  system_template_en: >
+    You are an expert Italian linguist. Translate from Old Italian to Modern Italian.
+
+  user_template_it: >
     {examples}
 
 
@@ -15,21 +19,11 @@ prompt:
     scrivimi solo la traduzione senza aggiungere altro.
 
   template_en: >
-    You are an expert Italian linguist. Translate from Old Italian to Modern Italian.
-
     {examples}
 
     
     Translate '{old_sentence}' taking into account the ways of speaking and writing of the medieval and Renaissance periods,
     just write me the translation without adding anything else.
-
-
-data:
-  input_file: "data/dataset_cleaned.cvs"
-  output_file: "data/dataset_cleaned_{model}.csv"
-  examples_file: "data/examples.txt"
-  text_column: "Sentence"
-  translated_column: "Translated"
 
 rate_limit:
   req_per_min: 30

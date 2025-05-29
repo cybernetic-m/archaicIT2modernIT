@@ -66,8 +66,12 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
                 continue  # Retry after wait
             response.raise_for_status() # Raise an exception for other HTTP errors like 400 or 500 (if one occurred)
             translation = response.json() # return the response in json format (a dict)
-            print(translation) # print the result for debugging purposes
+            
+            # Translation is a dict with 'id' (a unique identifier for the request),  'created' (the timestamp of the request) ... 
+            # inside 'choices' there are different generated responses in general, we take the first one
+            # inside 'choices there is the 'message' (translation) with the 'role' (user or assistant) and the 'content' (the translated sentence with the reasoning)
             return translation["choices"][0]["message"]["content"].strip()
+        
         except requests.exceptions.RequestException as e:
             print(f"Request failed for: '{user_prompt_template}'\nError: {e}")
             return None
