@@ -79,7 +79,7 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
             return None
         
 
-def llm_translate_dataset(api_key, input_file, model_name, prompt_builder, temperature, req_per_min, save_path):
+def LLM_translation(api_key, input_file, model_name, prompt_builder, temperature, req_per_min, save_path):
 
 # This function takes a pandas dataset in input and trannslate all the sentences saving a new dataset with the translations
 # Args: - api_key: <str> the Groq API key you need to authorization
