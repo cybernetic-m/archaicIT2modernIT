@@ -7,14 +7,15 @@ model:
 prompt:
 
   system_template_it: >
-   Sei un esperto linguista italiano. Traduci da italiano antico a italiano moderno, tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,
-   scrivimi solo la traduzione senza aggiungere altro.
+   Sei un esperto linguista italiano. 
 
   system_template_en: >
-    You are an expert Italian linguist. Translate from Old Italian to Modern Italian, taking into account the ways of speaking and writing of the medieval and Renaissance periods,
-    just write me the translation without adding anything else.
+    You are an expert Italian linguist. 
 
   user_template_it: >
+    Traduci da italiano antico a italiano moderno, tenendo conto dei modi di dire e scrivere dei tempi medievali e rinascimentali,
+    scrivimi solo la traduzione senza aggiungere altro.
+
     {examples}
 
 
@@ -22,6 +23,9 @@ prompt:
     Moderno:
 
   template_en: >
+    Translate from Old Italian to Modern Italian, taking into account the ways of speaking and writing of the medieval and Renaissance periods,
+    just write me the translation without adding anything else.
+    
     {examples}
 
     
