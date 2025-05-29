@@ -22,10 +22,10 @@ prompt:
     Antico: '{old_sentence}'
     Moderno:
 
-  template_en: >
+  user_template_en: >
     Translate from Old Italian to Modern Italian, taking into account the ways of speaking and writing of the medieval and Renaissance periods,
     just write me the translation without adding anything else.
-    
+
     {examples}
 
     
