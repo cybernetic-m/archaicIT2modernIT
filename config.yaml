@@ -31,6 +31,25 @@ prompt:
     
     Archaic: '{old_sentence}'
     Modern: 
+
+  system_template_judge_tournament_en: >
+    You are an expert Italian linguist evaluator, tasked with evaluating two translations (A, B) of a source text.
+    
+  user_template_judge_tournament_en: >
+   Your goal is to decide which translation is better based on the following criteria:
+    -Meaning Preservation: the best is a fully faithful to the original meaning translation
+    -Grammar: the best is a grammar perfectly fluent and natural in the target Language
+    -Style Matching: the best is that style and register match the source perfectly
+    -Structural Alignment: the best is that mirrors sentence and paragraph structure effectively
+
+    Old sentence: {old_sentence}
+    Translation A: {A}
+    Translation B: {B}
+
+    Please read the old sentence text and both translations, then write only the choice A or B.
+
+
+  
 data:
   input_file: "data/dataset_cleaned.csv"
 
