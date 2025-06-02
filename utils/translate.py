@@ -163,10 +163,8 @@ def preprocess(data, tokenizer):
   # to 128 and returning a pytorch tensor (1,128). It return both "input_ids" and "attention_mask"
   model_input = tokenizer(input_text, max_length = 128, truncation=True, padding="max_length", return_tensors = "pt")
 
-  # I need 'as_target_tokenizer' method because differently from the model_input, the tokenization
-  # of the targets goes directly to the decoder of the transformer, then I need special tokens that the decoder need
-  with tokenizer.as_target_tokenizer():
-    model_target = tokenizer(target_text, max_length = 128, truncation=True, padding="max_length", return_tensors = "pt")
+  # Tokenize the output sentence (the modern of the dataset)
+  model_target = tokenizer(target_text, max_length = 128, truncation=True, padding="max_length", return_tensors = "pt")
 
   # Add to "model_input" a key 'target_ids' -> In this way we will give to the model a dict
   # {input_ids: ..., attention_mask: ...., target_ids:...}
