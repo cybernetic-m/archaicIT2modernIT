@@ -93,7 +93,7 @@ prompt:
 
     Meaning Preservation: <score>, Grammar: <score>, Style Matching: <score>, Structural Alignment: <score>, Completeness: <score>
 
-    Original sentence: {original}
+    Original sentence: {old_sentence}
     Translation: {translation}
 
 
