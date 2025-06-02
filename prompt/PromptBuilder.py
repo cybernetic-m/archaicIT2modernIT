@@ -68,3 +68,14 @@ class PromptBuilder:
 
     else:
       raise ValueError(f'Mode {self.mode} is not valid. Choose "zero-shot" or "few-shot" instead!')
+
+
+  def build_judge_prompt(self, tournament = True, old_sentence = "", A = "", B=""):
+
+    if tournament:
+      return self.user_prompt.format(old_sentence = old_sentence, examples = '')
+
+
+
+
+
