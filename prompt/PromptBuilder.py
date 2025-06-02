@@ -76,7 +76,7 @@ class PromptBuilder:
       return self.user_prompt.format(old_sentence = old_sentence, examples = '')
 
     else:
-      return self.user_prompt.format(old_sentence = old_sentence, translation = '')
+      return self.user_prompt.format(old_sentence = old_sentence, translation = translation)
 
 
 
