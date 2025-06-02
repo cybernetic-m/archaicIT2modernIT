@@ -48,6 +48,56 @@ prompt:
 
     Please read the old sentence text and both translations, then write only the choice A or B.
 
+  system_template_judge: >
+     You are an expert Italian linguist and translation evaluator. Your task is to assess a translation of a sentence from another language into Italian. You must assign a score from 1 to 5 for each of the following evaluation criteria. Provide only the requested scores, without explanations or additional commentary.
+
+  user_template_judge: >
+   Evaluate the translation using these five criteria:
+   
+   1. Meaning Preservation
+    1: Completely diverges in meaning, major misinterpretations or hallucinations
+    2: Core ideas are misrepresented or lost, with significant meaning shift
+    3: Mostly correct meaning, but with noticeable errors (minor shifts or omissions)
+    4: Meaning is preserved with minor discrepancies or nuances lost
+    5: Fully faithful to the original meaning
+
+    2. Grammar
+    1: Barely readable or nonsensical
+    2: Grammatically flawed throughout, affecting understanding
+    3: Minor grammatical or syntactic errors, but understandable
+    4: Fluent, with native-like grammar and syntax, but minor oddities
+    5: Perfectly fluent and natural in the target Language
+
+    3. Style Matching
+    1: Tone and style completely off (e.g. formal for slang)
+    2: Style mismatch that makes the translation jarring
+    3: Mostly consistent style, some mismatches
+    4: Style fits, though with slight inconsistencies in tone
+    5: Style and register match the source perfectly
+
+    4. Structural Alignment
+    1: Sentence structure completely changes or collapses
+    2: Structural elements are lost or reordered drastically
+    3: Mostly follows structure, with some reordering or changes
+    4: Retains source structure with minimal deviations
+    5: Mirrors sentence and paragraph structure effectively
+
+    5. Completeness
+    1: Large parts missing or major hallucinated content
+    2: Multiple omissions or additions altering meaning
+    3: Minor omissions or additions that don’t significantly alter meaning
+    4: Nearly complete with only slight trimming
+    5: Fully complete with no omissions or additions
+
+    Provide your evaluation in the following format (use only this format, without extra text):
+
+    Meaning Preservation: <score>, Grammar: <score>, Style Matching: <score>, Structural Alignment: <score>, Completeness: <score>
+
+    Original sentence: {original}
+    Translation: {translation}
+
+
+
 
   
 data:
