@@ -150,3 +150,76 @@ def LLM_translation(api_key, input_file, model_name, prompt_builder, temperature
     output_file = save_path + '/' + output_name # Add the save path to the output file name
     df.to_json(output_file, orient="records", lines=True, force_ascii=False) # Save the DataFrame to a JSONL file 
     print(f"Translated dataset saved to {output_file}")
+
+
+
+def preprocess(data, tokenizer):
+
+  # From the dictionary in input extract the 'src' (old sentence) and 'tgt' (modern sentence)
+  input_text = data['src']
+  target_text = data['tgt']
+
+  # Tokenize the input sentence (the old one) using as truncate the sentence if it is overcoming 128, padding all the sequence
+  # to 128 and returning a pytorch tensor (1,128). It return both "input_ids" and "attention_mask"
+  model_input = tokenizer(input_text, max_length = 128, truncation=True, padding="max_length", return_tensors = "pt")
+
+  # I need 'as_target_tokenizer' method because differently from the model_input, the tokenization
+  # of the targets goes directly to the decoder of the transformer, then I need special tokens that the decoder need
+  with tokenizer.as_target_tokenizer():
+    model_target = tokenizer(target_text, max_length = 128, truncation=True, padding="max_length", return_tensors = "pt")
+
+  # Add to "model_input" a key 'target_ids' -> In this way we will give to the model a dict
+  # {input_ids: ..., attention_mask: ...., target_ids:...}
+  model_input['labels'] = model_target['input_ids'] # squeeze because model_target['target_ids'] is (1,128) -> (128)
+
+  # Transform to a dict
+  return {k:v.squeeze(0) for k,v in model_input.items()}
+
+
+def Transformer_translation(input_file, model, model_name, tokenizer, save_path):
+
+# This function takes a pandas dataset in input and trannslate all the sentences saving a new dataset with the translations
+# Args: - input_file: the dataset 
+#       - model: the model object
+#       - tokenizer: the tokenizer object
+#       - save_path: the path where to save the translation
+#
+# Output: - None, but the translated dataset is saved in a new csv file with the translations
+    
+    # This force the tokenizer source language to italian
+    tokenizer.src_lang = "ita_Latn"
+    # This force the "begin of sentence" token to be <2ita_Latn> ("ita_Latn")
+    forced_bos_token_id = tokenizer.convert_tokens_to_ids("ita_Latn")
+
+    df = pd.read_csv(input_file) # Read the input file (CSV format) transforming into a pandas DataFrame
+
+    if 'Translation' not in df.columns:
+        df['Translation'] = None # Add a new column 'Translation' to the DataFrame if it does not exist with None values
+
+    # Iterate over each row in the DataFrame (idx is the index, row is the row data)
+    for idx, row in df.iterrows():
+        # Skip rows that already have a translation
+        # If the 'Translation' column is not NaN, (or None), it means that has the translation, then skip the row
+        if pd.notna(row.get('Translation')):
+            continue  # Skip current iteration for sentence already translated
+
+        sentence = row['Sentence'] # takes the sentence to translate from the 'Sentence' column
+        if not sentence or pd.isna(sentence):
+            continue # Skip empty or NaN sentences
+
+        # Tokenize the sentence (sentence tokenization contain input_ids and attention_mask)
+        sentence_tokenization = tokenizer(sentence, return_tensors="pt")
+        # Generate output tokens
+        outputs = model.generate(**sentence_tokenization, max_new_tokens=128, forced_bos_token_id=forced_bos_token_id) # Generate the translation
+        # Decode the translation, it takes translation[0] because these are the ids
+        translation = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+        # save the translation in the 'Translation' column of the DataFrame at row index = idx
+        df.at[idx, 'Translation'] = translation
+        print(f"Translated [{idx+1}/{len(df)}]: {sentence} -> {translation}")
+
+    # Name as "CaponataLovers-hw2_transl-{model_name}.jsonl"
+    output_name = input_file.split('/')[-1].replace('dataset.csv', f'CaponataLovers-hw2_transl-{model_name}.jsonl')
+    output_file = save_path + '/' + output_name # Add the save path to the output file name
+    df.to_json(output_file, orient="records", lines=True, force_ascii=False) # Save the DataFrame to a JSONL file
+    print(f"Translated dataset saved to {output_file}")
