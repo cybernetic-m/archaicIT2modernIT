@@ -36,19 +36,14 @@ prompt:
     You are an expert Italian linguist evaluator, tasked with evaluating two translations (A, B) of a source text.
     
   user_template_judge_tournament_en: >
-   Your goal is to decide which translation is better based on the following criteria:
-    -Meaning Preservation: the best is a fully faithful to the original meaning translation
-    -Grammar: the best is a grammar perfectly fluent and natural in the target Language
-    -Modern Structural Effectiveness: the best is a Fully natural and idiomatic structure; clear, fluent, and appropriate for contemporary Italian.
-    -Completeness: the best is fully complete with no omissions or additions
-    -Lexical Modernization: the best is that Modern terms feel natural, idiomatic, and true to current Italian usage.
-    
+   Your goal is to decide which translation is better based on the gold translation
 
     Old sentence: {old_sentence}
     A: {A}
     B: {B}
+    Gold translation: {gold}
 
-    Please read the 'Old sentence' and both translations 'A' and 'B', then write only your choice, no other comments.
+    Please read the 'Old sentence' and 'gold sentence' and both translations 'A' and 'B', then write only your choice, no other comments.
 
   system_template_judge: >
      You are an expert Italian linguist and translation evaluator. Your task is to assess a translation of a sentence from old italian into modern Italian. You must assign a score from 1 to 5 for each of the following evaluation criteria. Provide only the requested scores, without explanations or additional commentary.
