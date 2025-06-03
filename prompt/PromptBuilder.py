@@ -70,10 +70,16 @@ class PromptBuilder:
     else:
       raise ValueError(f'Mode {self.mode} is not valid. Choose "zero-shot" or "few-shot" instead!')
 
-  def build_judge_prompt(self, tournament=True, old_sentence="", A="", B="", translation=""):
+  def build_judge_prompt(self, tournament=True, old_sentence=None, A=None, B=None, gold = None, translation=None):
 
     if tournament:
-      return self.user_prompt.format(old_sentence = old_sentence, A = A, B = B)
+      if (not old_sentence) or (not A) or (not B) or (not gold):
+        print("Warning: one of the params is not valid")
+        return -1
+      return self.user_prompt.format(old_sentence = old_sentence, A = A, B = B, gold = gold)
 
     else:
+      if (not old_sentence) or (not translation):
+        print("Warning: one of the params is not valid")
+        return -1
       return self.user_prompt.format(old_sentence=old_sentence, translation=translation)
