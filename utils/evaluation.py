@@ -108,7 +108,7 @@ def get_winner(old_sentence, A, B, api_key):
     system_prompt_template = prompt_builder_tournament.getSystemPrompt()
     try:
         return clean_reasoning(
-            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0))
+            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0.0))
     except:
         return ""
 
@@ -188,7 +188,7 @@ def make_evaluation(to_eval, output_file_path, api_key):
                         "llama3-70b-8192",
                         system_prompt_template,
                         user_prompt_template,
-                        0
+                        0.0
                     )
                 )
             except Exception as e:
