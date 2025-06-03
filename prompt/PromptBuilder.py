@@ -73,7 +73,7 @@ class PromptBuilder:
   def build_judge_prompt(self, tournament=True, old_sentence="", A="", B="", translation=""):
 
     if tournament:
-      return self.user_prompt.format(old_sentence=old_sentence, examples='')
+      return self.user_prompt.format(old_sentence = old_sentence, A = A, B = B)
 
     else:
       return self.user_prompt.format(old_sentence=old_sentence, translation=translation)
