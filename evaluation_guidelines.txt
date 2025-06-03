@@ -31,4 +31,13 @@ Completeness
 2: Multiple omissions or additions altering meaning
 3: Minor omissions or additions that don’t significantly alter meaning
 4: Nearly complete with only slight trimming
-5: Fully complete with no omissions or additions
+5: Fully complete with no omissions or additions2. Lexical Modernization
+
+Lexical Modernization
+1: No modernization; reads like the original.
+2: Mostly archaic or unnatural word choices.
+3: Mixture of modern and archaic.
+4: Slightly dated or formal, but still acceptable in modern Italian.
+5: Modern terms feel natural, idiomatic, and true to current Italian usage.
+
+
