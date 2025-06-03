@@ -43,14 +43,14 @@ def load_translations(path):
     return sentence_map
 
 
-def compare_translations(fileA, fileB, gold_path):
+def compare_translations(fileA, fileB):
     """
     Takes 2 translation files and a gold standard CSV,
     returns a list of dicts with original sentence, gold, A, and B translations.
     """
     data_a = load_translations(fileA)  # should return a dict: {sentence: translation}
     data_b = load_translations(fileB)
-    gold_data = load_gold(gold_path)
+    gold_data = load_gold("../data/dataset_gold.csv")
 
     # Intersect keys present in all three sources
     common_sentences = set(data_a.keys()) & set(data_b.keys()) & set(gold_data.keys())
