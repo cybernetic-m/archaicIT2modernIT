@@ -4,8 +4,8 @@ import random
 from collections import defaultdict, Counter
 import os, sys
 
-prompt_path = os.path.abspath(os.path.join(os.path.dirname(file), '../prompt'))
-utils_path = os.path.abspath(os.path.join(os.path.dirname(file), '../utils'))
+prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
+utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
 sys.path.append(prompt_path)
 sys.path.append(utils_path)
 
