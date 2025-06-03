@@ -3,6 +3,8 @@ import time
 import random
 from collections import defaultdict, Counter
 import os, sys
+import pandas as pd
+
 
 prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
 utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
@@ -22,6 +24,13 @@ def clean_text(text):
     return text
 
 
+def load_gold(path):
+    """Loads gold translations from a CSV into a dictionary using pandas."""
+    df = pd.read_csv(path)
+    return dict(zip(df['Sentence'].str.strip(), df['Modern'].str.strip()))
+
+
+
 def load_translations(path):
     """loads a JSON lines e returns a dict {Sentence: Translation}"""
     sentence_map = {}
@@ -34,29 +43,31 @@ def load_translations(path):
     return sentence_map
 
 
-def compare_translations(fileA, fileB):
-    """takes 2 files and returns original sentence, translation A, translation B"""
-    data_a = load_translations(fileA)
+def compare_translations(fileA, fileB, gold_path):
+    """
+    Takes 2 translation files and a gold standard CSV,
+    returns a list of dicts with original sentence, gold, A, and B translations.
+    """
+    data_a = load_translations(fileA)  # should return a dict: {sentence: translation}
     data_b = load_translations(fileB)
+    gold_data = load_gold(gold_path)
 
-    # print("\n\n", "test", "\n\n")
-    # print(data_a)
-    # print(data_b)
-
-    common_sentences = list(set(data_a.keys()) & set(data_b.keys()))
+    # Intersect keys present in all three sources
+    common_sentences = set(data_a.keys()) & set(data_b.keys()) & set(gold_data.keys())
 
     result = []
     for sentence in common_sentences:
         original_length = len(sentence)
         result.append({
             "Sentence": sentence,
-            "A": data_a[sentence][0:original_length * 2],  # to not waste tokens on wrong translations
-            "B": data_b[sentence][0:original_length * 2]
+            "gold": gold_data[sentence],
+            "A": data_a[sentence][:original_length * 2],
+            "B": data_b[sentence][:original_length * 2]
         })
     return result
 
 
-def get_winner(old_sentence, A, B, api_key):
+def get_winner(old_sentence, A, B, gold, api_key):
     """given the original sentence and two translations asks the llm which one is better A or B"""
     if (api_key == '') or (not api_key):
         print("Warning: submit an api key")
@@ -72,7 +83,7 @@ def get_winner(old_sentence, A, B, api_key):
                                               lang='en'
                                               )
 
-    user_prompt_template = prompt_builder_tournament.build_judge_prompt(True, old_sentence, A, B)
+    user_prompt_template = prompt_builder_tournament.build_judge_prompt(tournament = True, old_sentence=old_sentence, A=A, B=B, gold=gold)
 
     system_prompt_template = prompt_builder_tournament.getSystemPrompt()
     try:
@@ -89,7 +100,7 @@ def make_match(sentences_data, api_key):
     cont = 0
     for sentences in sentences_data:
         print(f"{cont}, ", end='')
-        winner = get_winner(sentences['Sentence'], sentences['A'], sentences['B'], api_key).strip()
+        winner = get_winner(sentences['Sentence'], sentences['A'], sentences['B'], sentences['gold'], api_key).strip()
         time.sleep(60 / 29)
 
         if winner == 'A':
