@@ -9,9 +9,9 @@ utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils')
 sys.path.append(prompt_path)
 sys.path.append(utils_path)
 
-from prompt.PromptBuilder import PromptBuilder
-from utils.config import load_config
-from utils.translate import clean_reasoning, call_translation_api
+from PromptBuilder import PromptBuilder
+from config import load_config
+from translate import clean_reasoning, call_translation_api
 
 
 def clean_text(text):
