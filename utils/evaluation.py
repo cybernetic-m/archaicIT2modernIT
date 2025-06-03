@@ -133,8 +133,8 @@ def tournament(files, api_key):
         files = files[:-1]
 
     for i in range(0, len(files), 2):
-        player1 = files[i]
-        player2 = files[i + 1]
+        player2 = files[i]
+        player1 = files[i + 1]
         data = compare_translations(player1, player2)
         print(player1, "vs", player2)
 
