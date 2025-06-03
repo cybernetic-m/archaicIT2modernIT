@@ -2,10 +2,16 @@ import json
 import time
 import random
 from collections import defaultdict, Counter
+import os, sys
 
-from nlp_homeworks.hw2.archaicIT2modernIT.prompt.PromptBuilder import PromptBuilder
-from nlp_homeworks.hw2.archaicIT2modernIT.utils.config import load_config
-from nlp_homeworks.hw2.archaicIT2modernIT.utils.translate import clean_reasoning, call_translation_api
+prompt_path = os.path.abspath(os.path.join(os.path.dirname(file), '../prompt'))
+utils_path = os.path.abspath(os.path.join(os.path.dirname(file), '../utils'))
+sys.path.append(prompt_path)
+sys.path.append(utils_path)
+
+from prompt.PromptBuilder import PromptBuilder
+from utils.config import load_config
+from utils.translate import clean_reasoning, call_translation_api
 
 
 def clean_text(text):
