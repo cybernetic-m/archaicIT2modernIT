@@ -56,6 +56,32 @@ def compare_translations(fileA, fileB):
     return result
 
 
+def get_winner(old_sentence, A, B, api_key):
+    """given the original sentence and two translations asks the llm which one is better A or B"""
+    if (api_key == '') or (not api_key):
+        print("Warning: submit an api key")
+        return
+
+    config = load_config("archaicIT2modernIT/config.yaml")
+
+    prompt_judge = (
+    config['prompt']['system_template_judge_tournament_en'], config['prompt']['user_template_judge_tournament_en'])
+
+    prompt_builder_tournament = PromptBuilder(prompt_template=prompt_judge,
+                                              mode="zero-shot",
+                                              lang='en'
+                                              )
+
+    user_prompt_template = prompt_builder_tournament.build_judge_prompt(True, old_sentence, A, B)
+
+    system_prompt_template = prompt_builder_tournament.getSystemPrompt()
+    try:
+        return clean_reasoning(
+            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0.0))
+    except:
+        return ""
+
+
 def make_match(sentences_data, api_key):
     """guven all the translations returns the model who performed best between two"""
     score_A = 0
@@ -86,31 +112,6 @@ def make_match(sentences_data, api_key):
         return random.choice(["A", "B"])
 
 
-def get_winner(old_sentence, A, B, api_key):
-    """given the original sentence and two translations asks the llm which one is better A or B"""
-    if (api_key == '') or (not api_key):
-        print("Warning: submit an api key")
-        return
-
-    config = load_config("archaicIT2modernIT/config.yaml")
-
-    prompt_judge = (
-    config['prompt']['system_template_judge_tournament_en'], config['prompt']['user_template_judge_tournament_en'])
-
-    prompt_builder_tournament = PromptBuilder(prompt_template=prompt_judge,
-                                              mode="zero-shot",
-                                              lang='en'
-                                              )
-
-    user_prompt_template = prompt_builder_tournament.build_judge_prompt(True, old_sentence, A, B)
-
-    system_prompt_template = prompt_builder_tournament.getSystemPrompt()
-    try:
-        return clean_reasoning(
-            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0.0))
-    except:
-        return ""
-
 
 def save_winner(text):
     with open("winners.txt", "a", encoding="utf-8") as f:
@@ -132,8 +133,8 @@ def tournament(files, api_key):
         files = files[:-1]
 
     for i in range(0, len(files), 2):
-        player2 = files[i]
-        player1 = files[i + 1]
+        player1 = files[i]
+        player2 = files[i + 1]
         data = compare_translations(player1, player2)
         print(player1, "vs", player2)
 

@@ -59,6 +59,9 @@ def call_translation_api(api_key, model_name, system_prompt_template, user_promp
     }
 
 
+    print("prompt:", data)
+
+
     while True:
         try:
             response = requests.post(url, headers=headers, json=data) # send the request to the Groq API
