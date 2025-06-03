@@ -8,9 +8,10 @@ import pandas as pd
 
 prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
 utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
+gold_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/dataset_gold.csv'))
 sys.path.append(prompt_path)
 sys.path.append(utils_path)
-
+sys.path.append(gold_path)
 from PromptBuilder import PromptBuilder
 from config import load_config
 from translate import clean_reasoning, call_translation_api
@@ -50,7 +51,7 @@ def compare_translations(fileA, fileB):
     """
     data_a = load_translations(fileA)  # should return a dict: {sentence: translation}
     data_b = load_translations(fileB)
-    gold_data = load_gold("../data/dataset_gold.csv")
+    gold_data = load_gold(gold_path)
 
     # Intersect keys present in all three sources
     common_sentences = set(data_a.keys()) & set(data_b.keys()) & set(gold_data.keys())
