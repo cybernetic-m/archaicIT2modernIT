@@ -1,0 +1,148 @@
+﻿DEEPSEEK 
+-TURNO 1
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-2_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-4_it_temp-0.0.jsonl
+ - Score A: 54, Score B: 43
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-5_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-2_it_temp-0.0.jsonl
+ - Score A: 48, Score B: 49
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-1_it_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_zero-shot_it_temp-0.0.jsonl
+ - Score A: 47, Score B: 50
+
+
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-3_it_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-1_en_temp-0.0.jsonl
+ - Score A: 55, Score B: 42
+
+
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-3_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-4_en_temp-0.0.jsonl
+- Score A: 46, Score B: 51
+
+
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-5_it_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_zero-shot_en_temp-0.0.jsonl, 
+ - Score A: 43, Score B: 54
+
+
+
+
+-TURNO 2
+deepseek-r1-distill-llama-70b_few-shot_k-2_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-2_it_temp-0.0.jsonl
+ - Score A: 42, Score B: 55
+
+
+deepseek-r1-distill-llama-70b_zero-shot_it_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-3_it_temp-0.0.jsonl
+ - Score A: 43, Score B: 54
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-4_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_zero-shot_en_temp-0.0.jsonl
+ - Score A: 48, Score B: 49
+
+
+
+
+
+
+
+
+
+
+-TUROìNO 3
+- Bye: deepseek_zero-shot_en_temp-0.0.jsonl passa automaticamente al turno successivo
+
+
+deepseek-r1-distill-llama-70b_few-shot_k-2_it_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-3_it_temp-0.0.jsonl
+ - Score A: 55, Score B: 42
+
+
+-FINALE
+deepseek-r1-distill-llama-70b_zero-shot_en_temp-0.0.jsonl vs deepseek-r1-distill-llama-70b_few-shot_k-2_it_temp-0.0.jsonl
+ - Score A: 53, Score B: 44
+
+
+
+
+Vincitore: ['deepseek_zero-shot_en_temp-0.0.jsonl']
+
+
+
+
+
+
+GEMMA
+-TURNO 1
+gemma2-9b-it_few-shot_k-2_en_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-4_it_temp-0.0.jsonl
+ - Score A: 42, Score B: 55
+
+
+gemma2-9b-it_few-shot_k-5_en_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-2_it_temp-0.0.jsonl
+ - Score A: 58, Score B: 39
+
+
+gemma2-9b-it_few-shot_k-1_it_temp-0.0.jsonl vs gemma2-9b-it_zero-shot_it_temp-0.0.jsonl
+ - Score A: 55, Score B: 42
+
+
+
+
+gemma2-9b-it_few-shot_k-3_it_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-1_en_temp-0.0.jsonl
+ - Score A: 67, Score B: 30
+
+
+gemma2-9b-it_few-shot_k-3_en_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-4_en_temp-0.0.jsonl
+ - Score A: 55, Score B: 42
+
+
+gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl vs gemma2-9b-it_zero-shot_en_temp-0.0.jsonl
+ - Score A: 53, Score B: 44
+
+
+
+
+
+
+
+
+
+
+
+
+TURNO 2
+gemma2-9b-it_few-shot_k-4_it_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-5_en_temp-0.0.jsonl
+ - Score A: 66, Score B: 31
+
+
+gemma2-9b-it_few-shot_k-1_it_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-3_it_temp-0.0.jsonl
+ - Score A: 48, Score B: 49
+
+
+gemma2-9b-it_few-shot_k-3_en_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl
+ - Score A: 40, Score B: 57
+
+
+
+
+
+
+TURNO 3
+- Bye: gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl passa automaticamente al turno successivo
+
+
+gemma2-9b-it_few-shot_k-4_it_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-3_it_temp-0.0.jsonl
+ - Score A: 61, Score B: 36
+
+
+.-FINALE
+gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl vs gemma2-9b-it_few-shot_k-4_it_temp-0.0.jsonl
+- Score A: 66, Score B: 31
+
+
+Vincitore finale: gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl
