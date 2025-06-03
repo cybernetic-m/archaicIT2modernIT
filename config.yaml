@@ -51,7 +51,7 @@ prompt:
     Please read the 'Old sentence' and both translations 'A' and 'B', then write only your choice, no other comments.
 
   system_template_judge: >
-     You are an expert Italian linguist and translation evaluator. Your task is to assess a translation of a sentence from another language into Italian. You must assign a score from 1 to 5 for each of the following evaluation criteria. Provide only the requested scores, without explanations or additional commentary.
+     You are an expert Italian linguist and translation evaluator. Your task is to assess a translation of a sentence from old italian into modern Italian. You must assign a score from 1 to 5 for each of the following evaluation criteria. Provide only the requested scores, without explanations or additional commentary.
 
   user_template_judge: >
    Evaluate the translation using these five criteria:

@@ -45,7 +45,6 @@ def compare_translations(fileA, fileB):
 
     common_sentences = list(set(data_a.keys()) & set(data_b.keys()))
 
-    print(len(common_sentences))
     result = []
     for sentence in common_sentences:
         original_length = len(sentence)
@@ -108,7 +107,7 @@ def get_winner(old_sentence, A, B, api_key):
     system_prompt_template = prompt_builder_tournament.getSystemPrompt()
     try:
         return clean_reasoning(
-            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0))
+            call_translation_api(api_key, "llama3-70b-8192", system_prompt_template, user_prompt_template, 0.0))
     except:
         return ""
 
@@ -133,8 +132,8 @@ def tournament(files, api_key):
         files = files[:-1]
 
     for i in range(0, len(files), 2):
-        player1 = files[i]
-        player2 = files[i + 1]
+        player2 = files[i]
+        player1 = files[i + 1]
         data = compare_translations(player1, player2)
         print(player1, "vs", player2)
 
@@ -151,7 +150,7 @@ def tournament(files, api_key):
 
     print("\n - Winners of this round:", [clean_text(w) for w in match_winner])
 
-    return tournament(match_winner)
+    return tournament(match_winner, api_key)
 
 
 def make_evaluation(to_eval, output_file_path, api_key):
@@ -188,7 +187,7 @@ def make_evaluation(to_eval, output_file_path, api_key):
                         "llama3-70b-8192",
                         system_prompt_template,
                         user_prompt_template,
-                        0
+                        0.0
                     )
                 )
             except Exception as e:
