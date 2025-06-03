@@ -45,7 +45,6 @@ def compare_translations(fileA, fileB):
 
     common_sentences = list(set(data_a.keys()) & set(data_b.keys()))
 
-    print(len(common_sentences))
     result = []
     for sentence in common_sentences:
         original_length = len(sentence)
