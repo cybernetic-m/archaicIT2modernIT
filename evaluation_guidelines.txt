@@ -1,12 +1,9 @@
-Instead of one aggregated score, you can break the evaluation into sub-rubrics, each focusing on a specific dimension.
-
 Meaning Preservation
 1: Completely diverges in meaning, major misinterpretations or hallucinations
 2: Core ideas are misrepresented or lost, with significant meaning shift
 3: Mostly correct meaning, but with noticeable errors (minor shifts or omissions)
 4: Meaning is preserved with minor discrepancies or nuances lost
 5: Fully faithful to the original meaning
-
 
 Grammar
 1: Barely readable or nonsensical
@@ -22,7 +19,6 @@ Style Matching
 4: Style fits, though with slight inconsistencies in tone
 5: Style and register match the source perfectly
 
-
 Structural Alignment
 1: Sentence structure completely changes or collapses
 2: Structural elements are lost or reordered drastically
@@ -30,38 +26,9 @@ Structural Alignment
 4: Retains source structure with minimal deviations
 5: Mirrors sentence and paragraph structure effectively
 
-
-
-
 Completeness
 1: Large parts missing or major hallucinated content
 2: Multiple omissions or additions altering meaning
 3: Minor omissions or additions that don’t significantly alter meaning
 4: Nearly complete with only slight trimming
 5: Fully complete with no omissions or additions
-
-
-
-
-Holistic Judgment
-When making a holistic judgment, ask:
-- Does it feel natural and human-like? 
-- Is the core meaning and tone preserved?
-- Would a fluent speaker accept this without blinking?
-- Is the translation suitable for its intended audience/context?
-
-Evaluation for holistic judgment:
-1	Useless translation, unreadable or irrelevant
-2	Seriously flawed, distorts meaning too much
-3	Understandable but clearly imperfect
-4	Very good, with only minor non-disruptive flaws
-5	Excellent; clear, fluent, and faithful—needs no changes
-
-
-
-
-
-
-
-Few-Shot Prompting with Gold Examples
-Give the LLM examples of good vs bad translations with explanations, then ask it to evaluate a new one. This sets a normative baseline so the LLM "knows" what counts as a good translation.
