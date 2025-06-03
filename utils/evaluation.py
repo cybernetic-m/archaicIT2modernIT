@@ -151,7 +151,7 @@ def tournament(files, api_key):
 
     print("\n - Winners of this round:", [clean_text(w) for w in match_winner])
 
-    return tournament(match_winner)
+    return tournament(match_winner, api_key)
 
 
 def make_evaluation(to_eval, output_file_path, api_key):
