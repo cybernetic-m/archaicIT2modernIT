@@ -12,19 +12,12 @@ Grammar
 4: Fluent, with native-like grammar and syntax, but minor oddities
 5: Perfectly fluent and natural in the target Language
 
-Style Matching
-1: Tone and style completely off (e.g. formal for slang)
-2: Style mismatch that makes the translation jarring
-3: Mostly consistent style, some mismatches
-4: Style fits, though with slight inconsistencies in tone
-5: Style and register match the source perfectly
-
-Structural Alignment
-1: Sentence structure completely changes or collapses
-2: Structural elements are lost or reordered drastically
-3: Mostly follows structure, with some reordering or changes
-4: Retains source structure with minimal deviations
-5: Mirrors sentence and paragraph structure effectively
+Modern Structural Effectiveness
+1: Structure is archaic or rigid, hard to follow; mimics original in a way that hinders readability.
+2: Structure is awkward or overly literal; noticeably unnatural for modern Italian.
+3: Mixed structure; understandable but includes dated or clumsy phrasing.
+4: Mostly fluent and modern structure; minor awkwardness or stiffness remains.
+5: Fully natural and idiomatic structure; clear, fluent, and appropriate for contemporary Italian.
 
 Completeness
 1: Large parts missing or major hallucinated content
