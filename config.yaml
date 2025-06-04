@@ -148,7 +148,6 @@ prometheus_judge:
 
       ###Feedback: 
     
-      user_template_judge:
 
     rubrics: 
       meaning_preservation: >
