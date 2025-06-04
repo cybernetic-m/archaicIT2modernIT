@@ -266,3 +266,16 @@ def compute_evaluation_stats(jsonl_path):
         }
 
     return stats
+
+def read_file_paths(txt_file_path):
+    """
+    Reads a text file and returns a list of non-empty, stripped lines (file paths).
+    """
+    with open(txt_file_path, 'r', encoding='utf-8') as f:
+        lines = [line.strip() for line in f if line.strip()]
+    return lines
+
+def evaluate_winners(file, model, tokenizer, prompt_builder, rubrics):
+    for elem in read_file_paths(file):
+        print()
+        make_evaluation(elem, f"{clean_text(elem)}_evaluated.jsonl", model, tokenizer, prompt_builder, rubrics)
