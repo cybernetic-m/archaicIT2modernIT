@@ -38,7 +38,7 @@ def single_char(judge_output):
   if match:
       return str(match.group(1))
   else:
-      return None
+      return judge_output
   
 def clean_text(text):
     """just useful to make prints smaller"""
@@ -104,23 +104,39 @@ def get_winner(A, B, gold, judge_model, judge_tokenizer, prompt_builder):
 
 
 def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
-    """guven all the translations returns the model who performed best between two"""
+    """Given all the translations, returns the model who performed best between two"""
     score_A = 0
     score_B = 0
     cont = 0
+
     for sentences in sentences_data:
         print(f"{cont}, ", end='')
-        winner = get_winner(sentences['A'], sentences['B'], sentences['gold'], judge_model, judge_tokenizer,prompt_builder).strip()
+
+        # randomize A e B
+        items = [('A', sentences['A']), ('B', sentences['B'])]
+        random.shuffle(items)
+        label1, trans1 = items[0]
+        label2, trans2 = items[1]
+
+        # get best
+        winner = get_winner(trans1, trans2, sentences['gold'], judge_model, judge_tokenizer, prompt_builder).strip()
         time.sleep(60 / 29)
 
+        # Map answer to real A and B
         if winner == 'A':
-            score_A += 1
+            actual_winner = label1
         elif winner == 'B':
-            score_B += 1
+            actual_winner = label2
         else:
-            print \
-                (
-                    f"\n - llm did not answer with A or B on '{sentences['Sentence']}', but: '{winner}', thus no score assigned")
+            print(f"\n - llm did not answer with A or B on '{sentences['Sentence']}', but: '{winner}', thus no score assigned")
+            cont += 1
+            continue
+
+        # Assegna il punto al vero A o vero B
+        if actual_winner == 'A':
+            score_A += 1
+        elif actual_winner == 'B':
+            score_B += 1
 
         cont += 1
 
