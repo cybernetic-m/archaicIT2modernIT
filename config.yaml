@@ -117,14 +117,37 @@ prometheus_judge:
     ###Response B:
     {response_b}
 
+    ###Reference Answer (Gold):
+    {reference_answer}
+
     ###Score Rubric:
     Is the translation faithful to the original meaning, grammatically correct, structurally modern, complete, and lexically modernized?
 
     ###Feedback:
+  absolute:
+    system_prompt: "You are a fair judge assistant tasked with providing clear, objective feedback based on specific criteria, ensuring each assessment reflects the absolute standards set for performance."
+    user_prompt: > 
+      ###Task Description:
+      An instruction, a response to evaluate, a reference answer that gets a score of 5, and a score rubric representing a evaluation criteria are given.
+      1. Write a detailed feedback that assess the quality of the response strictly based on the given score rubric, not evaluating in general.
+      2. After writing a feedback, write a score that is an integer between 1 and 5. You should refer to the score rubric.
+      3. The output format should look as follows: "Feedback: (write a feedback for criteria) [RESULT] (an integer number between 1 and 5)"
+      4. Please do not generate any other opening, closing, and explanations.
 
-   
+      ###The instruction to evaluate:
+      You need to evaluate the translation of an old Italian sentence into modern Italian based on the reference answer that gets a score of 5.
 
-  
+      ###Response to evaluate:
+      {response}
+
+      ###Reference Answer (Score 5):
+      {reference_answer}
+
+      ###Score Rubrics:
+      {rubric}
+
+      ###Feedback: 
+        
 data:
   input_file: "data/dataset_cleaned.csv"
 
