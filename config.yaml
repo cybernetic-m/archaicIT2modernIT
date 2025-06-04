@@ -95,7 +95,6 @@ prompt:
 
 prometheus_judge:
   relative:
-   instruction: "You need to choose the better translation from old Italian sentence into modern Italian between two translations." 
    system_prompt: "You are a fair judge assistant tasked with providing clear, objective feedback based on specific criteria, ensuring each assessment reflects the absolute standards set for performance."
    user_prompt: > 
     ###Task Description:
@@ -110,7 +109,7 @@ prometheus_judge:
     4. Do not generate any other opening, closing, or unrelated text.
 
     ###The instruction to evaluate:
-    {instruction}
+    You need to choose the better translation from old Italian sentence into modern Italian between two translations.
 
     ###Response A:
     {response_a}
