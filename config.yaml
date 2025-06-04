@@ -47,7 +47,7 @@ prompt:
   system_template_judge: >
      You are an expert Italian linguist and translation evaluator. Your task is to assess a translation of a sentence from old italian into modern Italian. You must assign a score from 1 to 5 for each of the following evaluation criteria. Provide only the requested scores, without explanations or additional commentary.
 
-  user_template_judge:
+  user_template_judge: >
    Meaning Preservation
     1: Completely diverges in meaning, major misinterpretations or hallucinations
     2: Core ideas are misrepresented or lost, with significant meaning shift
