@@ -205,7 +205,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
             gold = gold_data[original]
 
             for rubric in rubrics:
-                user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute", response=translation, reference_answer=gold, rubric=rubric)
+                user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute", response=translation, gold=gold, rubric=rubric)
                 system_prompt = prompt_builder.getSystemPrompt()
 
                 user_content = system_prompt + "\n\n" + user_prompt
