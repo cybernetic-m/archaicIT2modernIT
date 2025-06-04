@@ -103,7 +103,7 @@ def get_winner(A, B, gold, judge_model, judge_tokenizer):
                                               lang='en'
                                               )
 
-    user_prompt = prompt_builder_tournament.build_prometheus_prompt(mode='relative', response_a = A, response_b = B, reference_answer = gold)
+    user_prompt = prompt_builder_tournament.build_prometheus_prompt(mode='relative', A= A, B = B, reference_answer = gold)
     system_prompt = prompt_builder_tournament.getSystemPrompt()
     try:
         user_content = system_prompt + "\n\n" + user_prompt
