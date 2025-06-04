@@ -214,7 +214,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 user_content = system_prompt + "\n\n" + user_prompt
 
                 try:
-                    prometheus_evaluation = #random.randint(1, 5) #prometheus_choice(judge_model, judge_tokenizer, user_content) # chiamare prometheus
+                    prometheus_evaluation = prometheus_choice(judge_model, judge_tokenizer, user_content) # chiamare prometheus
                     print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
                 except Exception as e:
