@@ -46,7 +46,15 @@ def single_char(judge_output):
       return str(match.group(1))
   else:
       return "error: no match" + judge_output
-  
+
+def single_num(judge_output):
+  # Extract score from outputmatch
+  match = re.search(r"[RESULT]:\s*(\d+)", judge_output)
+  if match:
+      return str(match.group(1))
+  else:
+      return "error: no match" + judge_output
+
 def clean_text(text):
     """just useful to make prints smaller"""
     text = text.split("/")[-1]
@@ -222,7 +230,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 user_content = system_prompt + "\n\n" + user_prompt
 
                 try:
-                    prometheus_evaluation = prometheus_choice(judge_model, judge_tokenizer, user_content).replace('[RESULT] ', '') # chiamare prometheus
+                    prometheus_evaluation = int(single_num(prometheus_choice(judge_model, judge_tokenizer, user_content))) # chiamare prometheus
                     print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
                 except Exception as e:
