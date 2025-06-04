@@ -24,6 +24,7 @@ from translate import clean_reasoning, call_translation_api
 
 number_of_translation = 2 # insert 999999999 to make all the translations
 
+
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     messages = [
     {"role": "user", "content": user_content},
@@ -38,6 +39,41 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     decoded = tokenizer.batch_decode(generated_ids)
     return decoded[0]
 
+'''
+def prometheus_choice(model, tokenizer, user_content, device='cuda'):
+    messages = [{"role": "user", "content": user_content}]
+
+    # Apply chat template and tokenize with padding and truncation
+    encodeds = tokenizer.apply_chat_template(
+        messages, 
+        return_tensors="pt", 
+        padding=True, 
+        truncation=True
+    )
+
+    input_ids = encodeds["input_ids"].to(device)
+    attention_mask = encodeds["attention_mask"].to(device)
+
+    # Ensure pad_token_id is defined
+    if model.config.pad_token_id is None:
+        model.config.pad_token_id = tokenizer.eos_token_id
+
+    model.to(device)
+
+    # Generate tokens
+    generated_ids = model.generate(
+        input_ids=input_ids,
+        attention_mask=attention_mask,
+        max_new_tokens=1000,
+        do_sample=True,
+        pad_token_id=model.config.pad_token_id
+    )
+
+    # Decode output
+    decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+    return decoded
+
+'''
 
 def single_char(judge_output):
   # Extract score from output
