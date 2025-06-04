@@ -5,6 +5,8 @@ from collections import defaultdict, Counter
 import os, sys
 import pandas as pd
 import re
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
