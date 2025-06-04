@@ -95,9 +95,36 @@ prompt:
 
 prometheus_judge:
   relative:
-   instruction: "You need to evaluate the translation of an old Italian sentence into modern Italian." 
-   rubric: "Is the translation faithful to the original meaning, grammatically correct, structurally modern, complete, and lexically modernized?"
-  
+   instruction: "You need to choose the better translation from old Italian sentence into modern Italian between two translations." 
+   system_prompt: "You are a fair judge assistant tasked with providing clear, objective feedback based on specific criteria, ensuring each assessment reflects the absolute standards set for performance."
+   user_prompt: > 
+    ###Task Description:
+    An instruction, two responses (A and B), and a score rubric are given.
+
+    1. Compare Response A and Response B based on the given rubric.
+    2. Determine which one is better and explain **why**, using objective criteria from the rubric.
+    3. After the explanation, return your judgment in the following format:
+
+    "[Result]: Response (A/B) is better."
+
+    4. Do not generate any other opening, closing, or unrelated text.
+
+    ###The instruction to evaluate:
+    {instruction}
+
+    ###Response A:
+    {response_a}
+
+    ###Response B:
+    {response_b}
+
+    ###Score Rubric:
+    Is the translation faithful to the original meaning, grammatically correct, structurally modern, complete, and lexically modernized?
+
+    ###Feedback:
+
+   
+
   
 data:
   input_file: "data/dataset_cleaned.csv"
