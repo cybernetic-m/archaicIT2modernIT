@@ -38,7 +38,6 @@ prompt:
   user_template_judge_tournament_en: >
    Your goal is to decide which translation is better based on the gold translation
 
-    Old sentence: {old_sentence}
     A: {A}
     B: {B}
     Gold translation: {gold}
@@ -90,8 +89,11 @@ prompt:
 
     Meaning Preservation: <score>, Grammar: <score>, Style Matching: <score>, Structural Alignment: <score>, Completeness: <score>
 
-    Original sentence: {old_sentence}
-    Translation: {translation}
+    Translation: 
+    {translation}
+    
+    Reference Answer (Gold):
+    {reference_answer}
 
 prometheus_judge:
   relative:
