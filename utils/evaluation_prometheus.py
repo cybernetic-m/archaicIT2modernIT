@@ -24,7 +24,7 @@ from translate import clean_reasoning, call_translation_api
 
 number_of_translation = 2 # insert 999999999 to make all the translations
 
-'''
+
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     messages = [
     {"role": "user", "content": user_content},
@@ -38,8 +38,8 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     generated_ids = model.generate(model_inputs, max_new_tokens=1000, do_sample=True)
     decoded = tokenizer.batch_decode(generated_ids)
     return decoded[0]
-'''
 
+'''
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     messages = [{"role": "user", "content": user_content}]
 
@@ -73,7 +73,7 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
     return decoded
 
-
+'''
 
 def single_char(judge_output):
   # Extract score from output
