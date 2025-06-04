@@ -159,7 +159,7 @@ prometheus_judge:
         4: Meaning is preserved with minor discrepancies or nuances lost
         5: Fully faithful to the original meaning
 
-      Grammar: >
+      grammar: >
         Evaluate the grammar according to the following scores:
         1: Barely readable or nonsensical
         2: Grammatically flawed throughout, affecting understanding
@@ -167,7 +167,7 @@ prometheus_judge:
         4: Fluent, with native-like grammar and syntax, but minor oddities
         5: Perfectly fluent and natural in the target Language
 
-      Modern Structural Effectiveness: >
+      modern_structural_effectiveness: >
         Evaluate the modern structural effectiveness according to the following scores:
         1: Structure is archaic or rigid, hard to follow; mimics original in a way that hinders readability.
         2: Structure is awkward or overly literal; noticeably unnatural for modern Italian.
@@ -175,7 +175,7 @@ prometheus_judge:
         4: Mostly fluent and modern structure; minor awkwardness or stiffness remains.
         5: Fully natural and idiomatic structure; clear, fluent, and appropriate for contemporary Italian.
 
-      Completeness: > 
+      completeness: > 
         Evaluate the completeness according to the following scores:
         1: Large parts missing or major hallucinated content
         2: Multiple omissions or additions altering meaning
@@ -183,7 +183,7 @@ prometheus_judge:
         4: Nearly complete with only slight trimming
         5: Fully complete with no omissions or additions
 
-      Lexical Modernization: >
+      lexical_modernization: >
         Evaluate the lexical modernization according to the following scores:
         1: No modernization; reads like the original.
         2: Mostly archaic or unnatural word choices.
