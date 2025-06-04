@@ -279,3 +279,36 @@ def evaluate_winners(file, model, tokenizer, prompt_builder, rubrics):
     for elem in read_file_paths(file):
         print()
         make_evaluation(elem, f"{clean_text(elem)}_evaluated.jsonl", model, tokenizer, prompt_builder, rubrics)
+
+
+def plot_multiple_models_comparison(model_stats_dict, labels_for_metrics):
+    """
+    Plots a grouped bar chart comparing mean scores across multiple models for each evaluation metric.
+
+    Parameters:
+        model_stats_dict (dict): keys are model names, values are stats dicts from compute_evaluation_stats()
+    """
+    model_names = list(model_stats_dict.keys())
+    metrics = list(next(iter(model_stats_dict.values())).keys())  # get metrics from the first model
+
+    n_models = len(model_names)
+    x = np.arange(len(metrics))  # base x positions for metrics
+    width = 0.8 / n_models  # bar width depending on number of models
+
+    plt.figure(figsize=(12, 6))
+
+    for i, (model_name, stats) in enumerate(model_stats_dict.items()):
+        means = [stats[m]["mean"] for m in metrics]
+        x_offset = x + (i - n_models / 2) * width + width / 2
+        plt.bar(x_offset, means, width=width, label=model_name)
+
+    plt.xlabel("Evaluation Metric")
+    plt.ylabel("Mean Score")
+    plt.title("Comparison of Evaluation Metrics Across Models")
+    plt.xticks(x, [labels_for_metrics.get(m, m) for m in metrics], rotation=30)
+
+    plt.ylim(0, 5)  # Adjust based on expected score range
+    plt.legend()
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
