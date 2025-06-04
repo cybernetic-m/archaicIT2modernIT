@@ -93,9 +93,11 @@ prompt:
     Original sentence: {old_sentence}
     Translation: {translation}
 
-
-
-
+prometheus_judge:
+  relative:
+   instruction: "You need to evaluate the translation of an old Italian sentence into modern Italian." 
+   rubric: "Is the translation faithful to the original meaning, grammatically correct, structurally modern, complete, and lexically modernized?"
+  
   
 data:
   input_file: "data/dataset_cleaned.csv"
