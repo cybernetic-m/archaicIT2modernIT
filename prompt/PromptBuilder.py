@@ -83,3 +83,11 @@ class PromptBuilder:
         print("Warning: one of the params is not valid")
         return -1
       return self.user_prompt.format(old_sentence=old_sentence, translation=translation)
+    
+  def build_prometheus_prompt(self, mode, response=None, rubric=None, response_a=None, response_b=None, reference_answer=None):
+
+    if mode=='relative':
+      return self.user_prompt.format(response_a = response_a, response_b = response_b, reference_answer = reference_answer)
+
+    elif mode=='absolute':
+      return self.user_prompt.format(response=response, reference_answer=reference_answer, rubric=rubric)
