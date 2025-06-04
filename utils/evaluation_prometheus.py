@@ -19,6 +19,11 @@ from PromptBuilder import PromptBuilder
 from config import load_config
 from translate import clean_reasoning, call_translation_api
 
+
+
+
+number_of_translation = 2 # insert 999999999 to make all the translations
+
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     messages = [
     {"role": "user", "content": user_content},
@@ -57,15 +62,18 @@ def load_gold(path):
 
 
 
-def load_translations(path):
+def load_translations(path, num):
     """loads a JSON lines e returns a dict {Sentence: Translation}"""
     sentence_map = {}
+    cont = 0
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
+          if cont < num:
             data = json.loads(line)
             sentence = data["Sentence"].strip()
             translation = data["Translation"].strip()
             sentence_map[sentence] = translation
+            cont+=1
     return sentence_map
 
 
@@ -74,8 +82,8 @@ def compare_translations(fileA, fileB):
     Takes 2 translation files and a gold standard CSV,
     returns a list of dicts with original sentence, gold, A, and B translations.
     """
-    data_a = load_translations(fileA)  # should return a dict: {sentence: translation}
-    data_b = load_translations(fileB)
+    data_a = load_translations(fileA, number_of_translation)  # should return a dict: {sentence: translation}
+    data_b = load_translations(fileB, number_of_translation)
     gold_data = load_gold(gold_path)
 
     # Intersect keys present in all three sources
@@ -196,7 +204,7 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder):
 
 def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, prompt_builder, rubrics):
     """asks the llm to make the evaluation given a file path to_eval that contains the original sentence and translations"""
-    data = load_translations(to_eval)
+    data = load_translations(to_eval, number_of_translation)
     gold_data = load_gold(gold_path)
 
     with open(output_file_path, 'w', encoding='utf-8') as f_out:
