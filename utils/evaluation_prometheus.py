@@ -38,7 +38,7 @@ def single_char(judge_output):
   if match:
       return str(match.group(1))
   else:
-      return judge_output
+      return "error: no mathc" + judge_output
   
 def clean_text(text):
     """just useful to make prints smaller"""
@@ -100,7 +100,7 @@ def get_winner(A, B, gold, judge_model, judge_tokenizer, prompt_builder):
         user_content = system_prompt + "\n\n" + user_prompt
         return single_char(prometheus_choice(judge_model, judge_tokenizer, user_content))
     except:
-        return ""
+        return "error occurred"
 
 
 def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
@@ -119,7 +119,7 @@ def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
         label2, trans2 = items[1]
 
         # get best
-        winner = get_winner(trans1, trans2, sentences['gold'], judge_model, judge_tokenizer, prompt_builder).strip()
+        winner = get_winner(trans1, trans2, sentences['gold'], judge_model, judge_tokenizer, prompt_builder)
         time.sleep(60 / 29)
 
         # Map answer to real A and B
