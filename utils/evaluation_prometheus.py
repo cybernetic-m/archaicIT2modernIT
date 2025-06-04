@@ -38,7 +38,7 @@ def single_char(judge_output):
   if match:
       return str(match.group(1))
   else:
-      return "error: no mathc" + judge_output
+      return "error: no match" + judge_output
   
 def clean_text(text):
     """just useful to make prints smaller"""
@@ -99,8 +99,8 @@ def get_winner(A, B, gold, judge_model, judge_tokenizer, prompt_builder):
     try:
         user_content = system_prompt + "\n\n" + user_prompt
         return single_char(prometheus_choice(judge_model, judge_tokenizer, user_content))
-    except:
-        return "error occurred"
+    except Exception as e:
+        return e
 
 
 def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
@@ -120,7 +120,7 @@ def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
 
         # get best
         winner = get_winner(trans1, trans2, sentences['gold'], judge_model, judge_tokenizer, prompt_builder)
-        time.sleep(60 / 29)
+
 
         # Map answer to real A and B
         if winner == 'A':
@@ -191,97 +191,40 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder):
     return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder)
 
 
-def make_evaluation(to_eval, output_file_path, api_key):
+def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, prompt_builder, rubrics):
     """asks the llm to make the evaluation given a file path to_eval that contains the original sentence and translations"""
-
-    if not api_key:
-        print("Warning: insert an api key")
-        return
-
     data = load_translations(to_eval)
-    config = load_config("archaicIT2modernIT/config.yaml")
-    prompt = (config['prompt']['system_template_judge'], config['prompt']['user_template_judge'])
-
-    system_prompt_template = prompt[0]
-    print(system_prompt_template)
-    prompt_builder_judge = PromptBuilder(prompt_template=prompt,
-                                         mode="zero-shot",
-                                         lang='en'
-                                         )
+    gold_data = load_gold(gold_path)
 
     with open(output_file_path, 'w', encoding='utf-8') as f_out:
+
         for original in data:
+            evaluations = {}
+
             translation = data[original]
-            user_prompt_template = prompt_builder_judge.build_judge_prompt(
-                tournament=False,
-                old_sentence=original,
-                translation=translation
-            )
+            gold = gold_data[original]
 
-            try:
-                evaluation = clean_reasoning(
-                    call_translation_api(
-                        api_key,
-                        "llama3-70b-8192",
-                        system_prompt_template,
-                        user_prompt_template,
-                        0.0
-                    )
-                )
-            except Exception as e:
-                evaluation = ''
+            for rubric in rubrics:
+                user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute", response=translation, reference_answer=gold, rubric=rubric)
+                system_prompt = prompt_builder.getSystemPrompt()
 
-            print(original.strip())
-            print(translation.strip())
-            print(evaluation.strip())
-            print()
+                user_content = system_prompt + "\n\n" + user_prompt
+
+                try:
+                    prometheus_evaluation = '3' #prometheus_choice(judge_model, judge_tokenizer, user_content) # chiamare prometheus
+                    print(f'evaluation for "{translation}" on {rubric}: {prometheus_evaluation}, the gold is: {gold}')
+
+                except Exception as e:
+                    print(e)
+                    prometheus_evaluation = ''
+
+                evaluations[rubric] = prometheus_evaluation
+
             json_line = {
                 "original": original,
                 "translation": translation,
-                "evaluation": evaluation
+                "evaluation": evaluations
             }
             f_out.write(json.dumps(json_line, ensure_ascii=False) + '\n')
 
-            time.sleep(60 / 29)
 
-
-def parse_evaluation(evaluation_str):
-    """cleans the evaluation string"""
-    parts = [part.strip() for part in evaluation_str.split(",")]
-    eval_dict = {}
-    for part in parts:
-        if ":" in part:
-            key, value = part.split(":")
-            if value:
-                eval_dict[key.strip()] = int(value.strip())
-    return eval_dict
-
-
-def print_stats(file_path):
-    """returns and prints the stats for each metric given an evaluation file"""
-    metrics = ["Meaning Preservation", "Grammar", "Style Matching", "Structural Alignment", "Completeness"]
-
-    scores = defaultdict(list)
-
-    with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            record = json.loads(line)
-            eval_dict = parse_evaluation(record["evaluation"])
-            for metric in metrics:
-                score = eval_dict.get(metric)
-                if score is not None:
-                    scores[metric].append(score)
-
-    # statistics for each metric
-    total_score = 0
-    for metric in metrics:
-        values = scores[metric]
-        print(f"\n {metric}:")
-        print(f"  - Media: {sum(values) / len(values):.2f}")
-        # print(f"  - Min: {min(values)}, Max: {max(values)}")
-        print(f"  - Distribuzione: {dict(Counter(values))}")
-        total_score += sum(values)
-
-    print(f"\n  - Totale: {total_score}")
-
-    return scores
