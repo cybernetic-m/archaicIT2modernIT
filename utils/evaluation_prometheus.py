@@ -140,7 +140,7 @@ def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
 
         cont += 1
 
-    print(f"\n - Score A: {score_A}, Score B: {score_B}")
+    print(f"\n - Score A: {score_A}, Score B: {score_B}", end = ' ')
     if score_A > score_B:
         return "A"
     elif score_A < score_B:
@@ -173,20 +173,21 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder):
         player1 = files[i]
         player2 = files[i + 1]
         data = compare_translations(player1, player2)
-        print(player1, "vs", player2)
+        print("\n", clean_text(player1), "vs", clean_text(player2))
 
         winner = make_match(data, judge_model, judge_tokenizer, prompt_builder)
 
         if winner == "A":
             winner = player1
-            print(f"  - winner: {player1}")
+            print(f"  - winner: {clean_text(player1)}")
         elif winner == "B":
             winner = player2
-            print(f"  - winner: {player2}")
+            print(f"  - winner: {clean_text(player2)}")
 
         match_winner.append(winner)
 
     print("\n - Winners of this round:", [clean_text(w) for w in match_winner])
+    print("\n ---STARTING NEXT ROUND---")
 
     return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder)
 
@@ -200,25 +201,25 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
 
         for original in data:
             evaluations = {}
-
+            print('\n', original)
             translation = data[original]
             gold = gold_data[original]
 
-            for rubric in rubrics:
-                user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute", response=translation, gold=gold, rubric=rubric)
+            for key, rubric in rubrics.items():
+                user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute",response=translation, gold=gold, rubric=rubric)
                 system_prompt = prompt_builder.getSystemPrompt()
 
                 user_content = system_prompt + "\n\n" + user_prompt
 
                 try:
-                    prometheus_evaluation = '3' #prometheus_choice(judge_model, judge_tokenizer, user_content) # chiamare prometheus
-                    print(f'evaluation for "{translation}" on {rubric}: {prometheus_evaluation}, the gold is: {gold}')
+                    prometheus_evaluation = #random.randint(1, 5) #prometheus_choice(judge_model, judge_tokenizer, user_content) # chiamare prometheus
+                    print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
                 except Exception as e:
                     print(e)
                     prometheus_evaluation = ''
 
-                evaluations[rubric] = prometheus_evaluation
+                evaluations[key] = prometheus_evaluation
 
             json_line = {
                 "original": original,
@@ -228,3 +229,40 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
             f_out.write(json.dumps(json_line, ensure_ascii=False) + '\n')
 
 
+
+def compute_evaluation_stats(jsonl_path):
+    """
+    Reads a JSONL file with evaluation scores and returns a dictionary
+    with statistics for each evaluation metric: sum, mean, and distribution.
+    """
+
+    metrics = defaultdict(list)
+
+    # Read the file line by line
+    with open(jsonl_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            record = json.loads(line)
+            evaluation = record.get("evaluation", {})
+
+            # Collect values for each metric
+            for metric, value in evaluation.items():
+                try:
+                    metrics[metric].append(float(value))
+                except ValueError:
+                    continue  # Skip non-numeric values
+
+    # Compute statistics for each metric
+    stats = {}
+
+    for metric, values in metrics.items():
+        total = sum(values)
+        mean = total / len(values) if values else 0
+        distribution = dict(Counter(values))  # frequency of each score
+
+        stats[metric] = {
+            "sum": total,
+            "mean": mean,
+            "distribution": distribution
+        }
+
+    return stats
