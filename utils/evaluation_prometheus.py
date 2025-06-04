@@ -103,14 +103,14 @@ def get_winner(A, B, gold, judge_model, judge_tokenizer, prompt_builder):
         return ""
 
 
-def make_match(sentences_data, judge_model, judge_tokenizer):
+def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
     """guven all the translations returns the model who performed best between two"""
     score_A = 0
     score_B = 0
     cont = 0
     for sentences in sentences_data:
         print(f"{cont}, ", end='')
-        winner = get_winner(sentences['A'], sentences['B'], sentences['gold'], judge_model, judge_tokenizer).strip()
+        winner = get_winner(sentences['A'], sentences['B'], sentences['gold'], judge_model, judge_tokenizer,prompt_builder).strip()
         time.sleep(60 / 29)
 
         if winner == 'A':
