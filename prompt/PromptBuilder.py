@@ -87,7 +87,7 @@ class PromptBuilder:
   def build_prometheus_prompt(self, mode, response=None, rubric=None, A=None, B=None, gold=None):
 
     if mode=='relative':
-      return self.user_prompt.format(response_a = A, response_b = B, reference_answer = gold)
+      return self.user_prompt.format(A = A, B = B, gold = gold)
 
     elif mode=='absolute':
       return self.user_prompt.format(response=response, reference_answer=gold, rubric=rubric)
