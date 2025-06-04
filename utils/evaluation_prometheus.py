@@ -91,20 +91,11 @@ def compare_translations(fileA, fileB):
     return result
 
 
-def get_winner(A, B, gold, judge_model, judge_tokenizer):
+def get_winner(A, B, gold, judge_model, judge_tokenizer, prompt_builder):
    
-    config = load_config("archaicIT2modernIT/config.yaml")
-
-    prompt_judge = (
-    config['prompt']['system_template_judge_tournament_en'], config['prompt']['user_template_judge_tournament_en'])
-
-    prompt_builder_tournament = PromptBuilder(prompt_template=prompt_judge,
-                                              mode="zero-shot",
-                                              lang='en'
-                                              )
-
-    user_prompt = prompt_builder_tournament.build_prometheus_prompt(mode='relative', A= A, B = B, reference_answer = gold)
-    system_prompt = prompt_builder_tournament.getSystemPrompt()
+    user_prompt = prompt_builder.build_prometheus_prompt(mode='relative', A= A, B = B, gold = gold)
+    system_prompt = prompt_builder.getSystemPrompt()
+    
     try:
         user_content = system_prompt + "\n\n" + user_prompt
         return single_char(prometheus_choice(judge_model, judge_tokenizer, user_content))
@@ -148,7 +139,7 @@ def save_winner(text):
         f.write(text + "\n")
 
 
-def tournament(files, judge_model, judge_tokenizer):
+def tournament(files, judge_model, judge_tokenizer, prompt_builder):
     """makes the tournament where an llm decides if it's better translation A or B"""
     if len(files) == 1:
         print("\n\n ----- Final winner:", files[0].split("/")[-1])
@@ -168,7 +159,7 @@ def tournament(files, judge_model, judge_tokenizer):
         data = compare_translations(player1, player2)
         print(player1, "vs", player2)
 
-        winner = make_match(data, judge_model, judge_tokenizer)
+        winner = make_match(data, judge_model, judge_tokenizer, prompt_builder)
 
         if winner == "A":
             winner = player1
@@ -181,7 +172,7 @@ def tournament(files, judge_model, judge_tokenizer):
 
     print("\n - Winners of this round:", [clean_text(w) for w in match_winner])
 
-    return tournament(match_winner, judge_model, judge_tokenizer)
+    return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder)
 
 
 def make_evaluation(to_eval, output_file_path, api_key):
