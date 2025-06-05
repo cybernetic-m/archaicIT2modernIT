@@ -22,7 +22,7 @@ from translate import clean_reasoning, call_translation_api
 
 
 
-number_of_translation = 2000 # insert 999999999 to make all the translations
+number_of_translation = 3 # insert 999999999 to make all the translations
 
 
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
