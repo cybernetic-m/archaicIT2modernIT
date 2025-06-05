@@ -9,15 +9,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-#prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
-#utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
-#gold_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/dataset_gold.csv'))
-#sys.path.append(prompt_path)
-#sys.path.append(utils_path)
-#sys.path.append(gold_path)
-
-
-number_of_translation = 2 # insert 999999999 to evaluate all the translations
+# You can set this variable for debug if you want to evaluate a subset of translations
+# If you want to evaluate all the translations, set it to 999999999
+number_of_translation = 600000
 
 
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
