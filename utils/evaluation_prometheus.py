@@ -249,24 +249,23 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
     gold_data = load_gold(gold_path)
 
     with open(output_file_path, 'w', encoding='utf-8') as f_out:
-
+        count = 0
         for original in data:
+            print("Sentence" + count + '\n')
             evaluations = {}
-            #print('\n', original)
             translation = data[original]
             gold = gold_data[original]
 
             for key, rubric in rubrics.items():
+                print(f' - {key} rubric: {rubric}\n')
                 user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute",response=translation, gold=gold, rubric=rubric)
                 system_prompt = prompt_builder.getSystemPrompt()
 
                 user_content = system_prompt + "\n\n" + user_prompt
-                #print(user_content)
 
                 try:
                     prometheus_evaluation = single_num(prometheus_choice(judge_model, judge_tokenizer, user_content)) 
-                    print(prometheus_evaluation)
-                    #print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
+                    print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
                 except Exception as e:
                     print(e)
