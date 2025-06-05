@@ -331,10 +331,10 @@ def read_file_paths(txt_file_path):
         lines = [line.strip() for line in f if line.strip()]
     return lines
 
-def evaluate_winners(file, model, tokenizer, prompt_builder, rubrics):
-    for elem in read_file_paths(file):
+def evaluate_models(file_, model, tokenizer, prompt_builder, rubrics, gold_path):
+    for elem in read_file_paths(file_):
         print()
-        make_evaluation(elem, f"{clean_text(elem)}_evaluated.jsonl", model, tokenizer, prompt_builder, rubrics)
+        make_evaluation(elem, f"{clean_text(elem)}_evaluated.jsonl", model, tokenizer, prompt_builder, rubrics, gold_path)
 
 
 def plot_multiple_models_comparison(model_stats_dict, labels_for_metrics):
