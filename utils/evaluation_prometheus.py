@@ -262,7 +262,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 except Exception as e:
                     print(e)
                     prometheus_evaluation = ''
-                count+=1
+                
                 evaluations[key] = prometheus_evaluation
 
             json_line = {
@@ -271,6 +271,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 "evaluation": evaluations
             }
             f_out.write(json.dumps(json_line, ensure_ascii=False) + '\n')
+            count+=1
 
 
 
