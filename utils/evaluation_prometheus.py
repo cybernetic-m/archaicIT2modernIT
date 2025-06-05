@@ -26,7 +26,6 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
 
     generated_ids = model.generate(model_inputs, max_new_tokens=1500, do_sample=True)
     decoded = tokenizer.batch_decode(generated_ids)
-    print(decoded[0])
     return decoded[0]
 
 '''
@@ -251,7 +250,6 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
             gold = gold_data[original]
 
             for key, rubric in rubrics.items():
-                print(f' - {key} rubric: {rubric}\n')
                 user_prompt = prompt_builder.build_prometheus_prompt(mode="absolute",response=translation, gold=gold, rubric=rubric)
                 system_prompt = prompt_builder.getSystemPrompt()
 
@@ -259,8 +257,8 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
 
                 try:
                     prometheus_evaluation = single_num(prometheus_choice(judge_model, judge_tokenizer, user_content)) 
-                    print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
-
+                    #print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
+                    print(f' - {key}: {prometheus_evaluation} \n')
                 except Exception as e:
                     print(e)
                     prometheus_evaluation = ''
