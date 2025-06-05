@@ -17,7 +17,7 @@ import numpy as np
 #sys.path.append(gold_path)
 
 
-number_of_translation = 2000 # insert 999999999 to evaluate all the translations
+number_of_translation = 2 # insert 999999999 to evaluate all the translations
 
 
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
@@ -254,7 +254,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
 
         for original in data:
             evaluations = {}
-            print('\n', original)
+            #print('\n', original)
             translation = data[original]
             gold = gold_data[original]
 
@@ -263,10 +263,13 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 system_prompt = prompt_builder.getSystemPrompt()
 
                 user_content = system_prompt + "\n\n" + user_prompt
+                print(user_content)
 
                 try:
-                    prometheus_evaluation = int(single_num(prometheus_choice(judge_model, judge_tokenizer, user_content))) # chiamare prometheus
-                    print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
+                    prometheus_evaluation = single_num(prometheus_choice(judge_model, judge_tokenizer, user_content)) 
+                    print(prometheus_choice)
+                    print(prometheus_evaluation)
+                    #print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
                 except Exception as e:
                     print(e)
