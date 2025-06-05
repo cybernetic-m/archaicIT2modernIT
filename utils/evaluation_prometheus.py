@@ -242,7 +242,7 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder, gold_path):
     print("\n - Winners of this round:", [clean_text(w) for w in match_winner])
     print("\n ---STARTING NEXT ROUND---")
 
-    return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder)
+    return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder, gold_path)
 
 
 def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, prompt_builder, rubrics):
