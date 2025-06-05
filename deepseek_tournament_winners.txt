@@ -1,0 +1,1 @@
+/content/archaicIT2modernIT/translations/fewShot1_temp0_it/CaponataLovers-hw2_transl-deepseek-r1-distill-llama-70b_few-shot_k-1_it_temp-0.0.jsonl

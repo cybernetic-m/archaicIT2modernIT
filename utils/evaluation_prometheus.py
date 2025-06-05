@@ -245,7 +245,7 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder, gold_path):
     return tournament(match_winner, judge_model, judge_tokenizer, prompt_builder, gold_path)
 
 
-def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, prompt_builder, rubrics):
+def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, prompt_builder, rubrics, gold_path):
     """asks the llm to make the evaluation given a file path to_eval that contains the original sentence and translations"""
     data = load_translations(to_eval, number_of_translation)
     gold_data = load_gold(gold_path)

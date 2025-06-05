@@ -1,2 +1,0 @@
-archaicIT2modernIT/translations/zeroShot_temp0_en/CaponataLovers-hw2_transl-deepseek-r1-distill-llama-70b_zero-shot_en_temp-0.0.jsonl
-archaicIT2modernIT/translations/fewShot5_temp0_it/CaponataLovers-hw2_transl-gemma2-9b-it_few-shot_k-5_it_temp-0.0.jsonl
