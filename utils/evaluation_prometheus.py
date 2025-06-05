@@ -9,20 +9,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
-utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
-gold_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/dataset_gold.csv'))
-sys.path.append(prompt_path)
-sys.path.append(utils_path)
-sys.path.append(gold_path)
-from PromptBuilder import PromptBuilder
-from config import load_config
-from translate import clean_reasoning, call_translation_api
+#prompt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../prompt'))
+#utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils'))
+#gold_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/dataset_gold.csv'))
+#sys.path.append(prompt_path)
+#sys.path.append(utils_path)
+#sys.path.append(gold_path)
 
 
-
-
-number_of_translation = 3 # insert 999999999 to make all the translations
+number_of_translation = 3 # insert 999999999 to evaluate all the translations
 
 
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
@@ -121,14 +116,14 @@ def load_translations(path, num):
     return sentence_map
 
 
-def compare_translations(fileA, fileB):
+def compare_translations(fileA, fileB, FileGold):
     """
     Takes 2 translation files and a gold standard CSV,
     returns a list of dicts with original sentence, gold, A, and B translations.
     """
     data_a = load_translations(fileA, number_of_translation)  # should return a dict: {sentence: translation}
     data_b = load_translations(fileB, number_of_translation)
-    gold_data = load_gold(gold_path)
+    gold_data = load_gold(FileGold)
 
     # Intersect keys present in all three sources
     common_sentences = set(data_a.keys()) & set(data_b.keys()) & set(gold_data.keys())
@@ -210,7 +205,7 @@ def save_winner(text, model_name):
         f.write(text + "\n")
 
 
-def tournament(files, judge_model, judge_tokenizer, prompt_builder):
+def tournament(files, judge_model, judge_tokenizer, prompt_builder, gold_path):
     """makes the tournament where an llm decides if it's better translation A or B"""
     if len(files) == 1:
         print("\n\n ----- Final winner:", files[0].split("/")[-1])
@@ -230,7 +225,7 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder):
     for i in range(0, len(files), 2):
         player1 = files[i]
         player2 = files[i + 1]
-        data = compare_translations(player1, player2)
+        data = compare_translations(player1, player2, gold_path)
         print("\n", clean_text(player1), "vs", clean_text(player2))
 
         winner = make_match(data, judge_model, judge_tokenizer, prompt_builder)
