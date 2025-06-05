@@ -81,7 +81,7 @@ def single_char(judge_output):
 
 def single_num(judge_output):
   # Extract score from outputmatch
-  match = re.search(r"[RESULT]:\s*(\d+)", judge_output)
+  match = re.search(r"\[RESULT\]\s*:?\s*(\d+)", judge_output)
   if match:
       return str(match.group(1))
   else:
