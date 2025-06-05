@@ -30,7 +30,7 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
     model_inputs = encodeds.to(device)
     model.to(device)
 
-    generated_ids = model.generate(model_inputs, max_new_tokens=1000, do_sample=True)
+    generated_ids = model.generate(model_inputs, max_new_tokens=1500, do_sample=True)
     decoded = tokenizer.batch_decode(generated_ids)
     print(decoded[0])
     return decoded[0]
