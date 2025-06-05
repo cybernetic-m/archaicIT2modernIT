@@ -204,8 +204,9 @@ def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
 
 
 
-def save_winner(text):
-    with open("winners.txt", "a", encoding="utf-8") as f:
+def save_winner(text, model_name):
+    name = model_name + "_" + "tournament_winners.txt"
+    with open(name, "a", encoding="utf-8") as f:
         f.write(text + "\n")
 
 
@@ -213,7 +214,10 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder):
     """makes the tournament where an llm decides if it's better translation A or B"""
     if len(files) == 1:
         print("\n\n ----- Final winner:", files[0].split("/")[-1])
-        save_winner(files[0])
+        if "gemma2" in files[0]:
+            save_winner(files[0], "gemma2")
+        elif "deepseek" in files[0]:
+            save_winner(files[0], "deepseek")
         return files[0]
 
     match_winner = []
