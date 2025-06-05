@@ -32,6 +32,7 @@ def prometheus_choice(model, tokenizer, user_content, device='cuda'):
 
     generated_ids = model.generate(model_inputs, max_new_tokens=1000, do_sample=True)
     decoded = tokenizer.batch_decode(generated_ids)
+    print(decoded[0])
     return decoded[0]
 
 '''
@@ -199,8 +200,8 @@ def make_match(sentences_data, judge_model, judge_tokenizer, prompt_builder):
 
 
 
-def save_winner(text, model_name):
-    name = model_name + "_" + "tournament_winners.txt"
+def save_winner(text):
+    name =  "winners.txt"
     with open(name, "a", encoding="utf-8") as f:
         f.write(text + "\n")
 
@@ -209,10 +210,7 @@ def tournament(files, judge_model, judge_tokenizer, prompt_builder, gold_path):
     """makes the tournament where an llm decides if it's better translation A or B"""
     if len(files) == 1:
         print("\n\n ----- Final winner:", files[0].split("/")[-1])
-        if "gemma2" in files[0]:
-            save_winner(files[0], "gemma2")
-        elif "deepseek" in files[0]:
-            save_winner(files[0], "deepseek")
+        save_winner(files[0])
         return files[0]
 
     match_winner = []
@@ -263,11 +261,10 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
                 system_prompt = prompt_builder.getSystemPrompt()
 
                 user_content = system_prompt + "\n\n" + user_prompt
-                print(user_content)
+                #print(user_content)
 
                 try:
                     prometheus_evaluation = single_num(prometheus_choice(judge_model, judge_tokenizer, user_content)) 
-                    print(prometheus_choice)
                     print(prometheus_evaluation)
                     #print(f'evaluation for "{translation} on {key} ": {prometheus_evaluation}, the gold is: {gold}')
 
