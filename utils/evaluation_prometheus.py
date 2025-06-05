@@ -17,7 +17,7 @@ import numpy as np
 #sys.path.append(gold_path)
 
 
-number_of_translation = 3 # insert 999999999 to evaluate all the translations
+number_of_translation = 2000 # insert 999999999 to evaluate all the translations
 
 
 def prometheus_choice(model, tokenizer, user_content, device='cuda'):
