@@ -245,7 +245,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
     with open(output_file_path, 'w', encoding='utf-8') as f_out:
         count = 0
         for original in data:
-            print("Sentence" + count + '\n')
+            print(f"Sentence {count} \n")
             evaluations = {}
             translation = data[original]
             gold = gold_data[original]
