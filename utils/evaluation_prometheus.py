@@ -274,8 +274,7 @@ def make_evaluation(to_eval, output_file_path, judge_model, judge_tokenizer, pro
             count+=1
 
 
-
-def compute_evaluation_stats(jsonl_path):
+def compute_evaluation_stats(jsonl_path, eval_name = 'evaluation'):
     """
     Reads a JSONL file with evaluation scores and returns a dictionary
     with statistics for each evaluation metric: sum, mean, and distribution.
@@ -287,7 +286,7 @@ def compute_evaluation_stats(jsonl_path):
     with open(jsonl_path, 'r', encoding='utf-8') as f:
         for line in f:
             record = json.loads(line)
-            evaluation = record.get("evaluation", {})
+            evaluation = record.get(eval_name, {})
 
             # Collect values for each metric
             for metric, value in evaluation.items():
@@ -338,12 +337,14 @@ def plot_multiple_models_comparison(model_stats_dict, labels_for_metrics):
 
     n_models = len(model_names)
     x = np.arange(len(metrics))  # base x positions for metrics
-    width = 0.8 / n_models  # bar width depending on number of models
+    width = 0.8 / n_models        # bar width depending on number of models
 
     plt.figure(figsize=(12, 6))
+    all_means = []
 
     for i, (model_name, stats) in enumerate(model_stats_dict.items()):
         means = [stats[m]["mean"] for m in metrics]
+        all_means.extend(means)
         x_offset = x + (i - n_models / 2) * width + width / 2
         plt.bar(x_offset, means, width=width, label=model_name)
 
@@ -352,7 +353,7 @@ def plot_multiple_models_comparison(model_stats_dict, labels_for_metrics):
     plt.title("Comparison of Evaluation Metrics Across Models")
     plt.xticks(x, [labels_for_metrics.get(m, m) for m in metrics], rotation=30)
 
-    plt.ylim(0, 5)  # Adjust based on expected score range
+    plt.ylim(0, max(all_means)+0.5)  # Adjust based on expected score range
     plt.legend()
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()
