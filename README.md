@@ -18,7 +18,7 @@ You can try to re-translate the dataset using the zero-shot or the few-shot by o
 4. **Run the transformer based approach**
 You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the transformer based aproach section.
 
-<img src="./images/sft.png" alt="transformer" width="500" height = "400" />
+<img src="./images/sft.png" alt="transformer" width="800" height = "400" />
 
 6. **Run the LLM as a judge**
 You can try our tournament selection and absolute evaluations in the LLM as a judge section.
