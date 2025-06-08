@@ -32,20 +32,22 @@ You can try our tournament selection and absolute evaluations in the LLM as a ju
 On the [Caponata_Lovers_hw2_shared_folder ](https://drive.google.com/drive/folders/1an6QsdK0kBZE63KZJgOVvfnzcqpunQCD?usp=drive_link)  you can see different folders where we uploaded the files of the translations, we actually made also the translations using english prompts but we cut them for time reason and GPU limits of colab for the prometheus approach.
 
 1. *translations folder*: contains the following folders of translations:
-- "*fewShot1_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 1-shot, temperature 0, language of the prompt in italian.
-- "*fewShot2_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 2-shot and temperature 0, language of the prompt in italian.
-- "*fewShot3_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 3-shot and temperature 0, language of the prompt in italian.
-- "*fewShot4_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 4-shot and temperature 0, language of the prompt in italian.
-- "*fewShot5_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 5-shot and temperature 0, language of the prompt in italian.
-- "*zeroShot_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 0-shot and temperature 0, language of the prompt in italian.
-- "*transformers*": this folder contains the translations of the transformer fine tuned and non fine tuned.
+ - "*fewShot1_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 1-shot, temperature 0, language of the prompt in italian.
+ - "*fewShot2_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 2-shot and temperature 0, language of the prompt in italian.
+ - "*fewShot3_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 3-shot and temperature 0, language of the prompt in italian.
+ - "*fewShot4_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 4-shot and temperature 0, language of the prompt in italian.
+ - "*fewShot5_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 5-shot and temperature 0, language of the prompt in italian.
+ - "*zeroShot_temp0_it*": this folder contains the translations of deepseek-lama and gemma with 0-shot and temperature 0, language of the prompt in italian.
+ - "*transformers*": this folder contains the translations of the transformer fine tuned and non fine tuned.
 
 2. *evaluations folder*: contains the following evaluations file:
-- "*deepseek_evaluation.jsonl*": this file contains the evaluations for deepseek for each of the 5 metrics
-- "*gemma_evaluation.jsonl*": this file contains the evaluations for gemma for each of the 5 metrics
-- "*transformer_ft_evaluation.jsonl*": this file contains the evaluations for the fine tuned transformer for each of the 5 metrics
-- "*transformer_non_Ft_evaluation.jsonl*": this file contains the evaluations for the non fine tuned transformer for each of the 5 metrics
+ - "*deepseek_evaluation.jsonl*": this file contains the evaluations for deepseek for each of the 5 metrics
+ - "*gemma_evaluation.jsonl*": this file contains the evaluations for gemma for each of the 5 metrics
+ - "*transformer_ft_evaluation.jsonl*": this file contains the evaluations for the fine tuned transformer for each of the 5 metrics
+ - "*transformer_non_Ft_evaluation.jsonl*": this file contains the evaluations for the non fine tuned transformer for each of the 5 metrics
 
+
+3. *dataset_gold* file contains our dataset of 200 sentences used for the fine tuning of the transformer.
 
 # Repository Structure
 
