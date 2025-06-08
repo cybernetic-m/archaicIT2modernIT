@@ -1,6 +1,6 @@
 # archaicIT2modernIT
 
-<img src="./images/copertina.jpg" alt="copertina" width="800" height = "400" />
+<img src="./images/copertina.jpeg" alt="copertina" width="800" height = "400" />
 
 The task of this homework consists in translating a dataset from archaic italian to modern italian using LLMs and evaluating them using prometheus. For this task we compared 4 models: deepseek-llama, gemma2, NLLB-200 Transformer 600M non fine tuned and fine tuned in the translation task.
 They are evaluated using rubric scores on five different metrics: Meaning Preservation, Grammar, Modern Structural Effectiveness, Completeness and Lexical Modernization.
