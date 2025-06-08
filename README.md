@@ -57,10 +57,10 @@ On the [Caponata_Lovers_hw2_shared_folder ](https://drive.google.com/drive/folde
  - "*transformers*": this folder contains the translations of the transformer fine tuned and non fine tuned.
 
 2. *evaluations folder*: contains the following evaluations file:
- - "*deepseek_evaluation.jsonl*": this file contains the evaluations for deepseek for each of the 5 metrics
- - "*gemma_evaluation.jsonl*": this file contains the evaluations for gemma for each of the 5 metrics
- - "*transformer_ft_evaluation.jsonl*": this file contains the evaluations for the fine tuned transformer for each of the 5 metrics
- - "*transformer_non_Ft_evaluation.jsonl*": this file contains the evaluations for the non fine tuned transformer for each of the 5 metrics
+ - "*CaponataLovers-hw2_transl-judge-deepseek*": this file contains the evaluations for deepseek for each of the 5 metrics
+ - "*CaponataLovers-hw2_transl-judge-gemma*": this file contains the evaluations for gemma for each of the 5 metrics
+ - "*CaponataLovers-hw2_transl-judge-transformerFt*": this file contains the evaluations for the fine tuned transformer for each of the 5 metrics
+ - "*CaponataLovers-hw2_transl-judge-transformerNonFt*": this file contains the evaluations for the non fine tuned transformer for each of the 5 metrics
 
 3. *dataset_gold* file contains our dataset of 200 sentences used for the fine tuning of the transformer.
 
