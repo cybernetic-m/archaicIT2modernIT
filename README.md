@@ -15,8 +15,9 @@ git clone "https://github.com/cybernetic-m/archaicIT2modernIT.git"
 
 2. **Make a Groq API Key**:
 It is needed to run the LLMs used for the translations. Go to https://console.groq.com/keys. Do the login and click on "create api key" in the top right corner.
+<img src="./images/groq-api.png" alt="groq" width="400" height = "300" align = "center" />
 
-3. **Open in colab hw2_Romano_LissaLattanzio":
+3. **Open in colab hw2_Romano_LissaLattanzio":**
 
 There you can try to:
  1. **Run the LLM based approach**
@@ -30,12 +31,14 @@ There you can try to:
  3. **Run the LLM as a judge**
  You can try our tournament selection and absolute evaluations in the LLM as a judge section.
 
- 4. **(Optional) Change the config.yaml**
-    You can:
-    - Change the models and temperatures
-    - Change the system and user prompt for italian and english language
-    - Change the system and user prompt of prometheus for the relative setting and absolute vote setting
-    - Change the rubrics descriptions
+4. **(Optional) Change the `config.yaml`**
+You can change:
+- **model:** Change the models (`llama`, `deepseek`, etc.) and `temperature` value
+- **prompt:** Edit system and user prompts for both Italian and English translations
+- **prometheus_judge:** Change the system and user prompts for both `relative` and `absolute` evaluation modes
+- **rubrics:** Modify the criteria descriptions used for scoring (e.g. grammar, completeness)
+- **data.input_file:** Point to a different CSV input dataset
+- **rate_limit:** Adjust the allowed number of requests per minute
 
 # ☁️ TAs GDrive Shared Folder ☁️
 
