@@ -4,7 +4,7 @@
 
 The task of this homework consists in translating a dataset from archaic italian to modern italian using LLMs and evaluating them using an LLM-as-a-Judge. Firstly we have created a NEW dataset called ["oldIT2modIT"](https://huggingface.co/datasets/cybernetic-m/oldIT2modIT) available on HuggingFace! It contains 200 old (ancient) Italian sentences and modern Italian sentences from authors in 1200-1300 period, as Dante Alighieri, Bono Giamboni, Torquato Tasso, Ludovico Ariosto and others. 
 For this task we have used two type of LLMs (`deepseek-r1-distill-llama-70b`, `gemma2-9b-it`) using the [Groq API](https://groq.com/) and one Transformer-based approach (`nllb-200-distilled-600M`), both original and also doing a Supervised Fine Tuning (SFT) using the previous mentioned dataset.
-The evaluation procedure was done using [`Prometheus-Eval`](https://github.com/prometheus-eval/prometheus-eval) as LLM-as-a-Judge, using rubric scores on five different metrics: Meaning Preservation, Grammar, Modern Structural Effectiveness, Completeness and Lexical Modernization. The Prometheus-Eval evaluator needs also "gold" labels (it means the translations of the original dataset.csv), but we did not have them: then, we have also translated the original dataset.csv file using ChatGPT 4o and validating manually each sentence, creating the dataset_gold.csv dataset.
+The evaluation procedure was done using [Prometheus-Eval](https://github.com/prometheus-eval/prometheus-eval) as LLM-as-a-Judge, using rubric scores on five different metrics: Meaning Preservation, Grammar, Modern Structural Effectiveness, Completeness and Lexical Modernization. The `Prometheus-Eval` evaluator needs also "gold" labels (it means the translations of the original dataset.csv), but we did not have them: then, we have also translated the original dataset.csv file using ChatGPT 4o and validating manually each sentence, creating the dataset_gold.csv dataset.
 
 # ⚠️TAs Instructions⚠️
 
@@ -17,22 +17,22 @@ git clone "https://github.com/cybernetic-m/archaicIT2modernIT.git"
    
 It is needed to run the LLMs used for the translations. 
 Go to https://console.groq.com/keys. 
-Do the login and click on "Create Api Key" in the top right corner.
+Do the login and click on "Create API Key" in the top right corner.
+
 <img src="./images/groq-api.png" alt="groq" width="400" height = "300" align = "center" />
 
-3. **Open in colab hw2_Romano_LissaLattanzio":**
+3. **Open in Colab `hw2_Romano_LissaLattanzio`:**
 
-There you can try to:
- - **Run the LLM based approach**
+ - **Run the LLM-based Approach**
  You can try to re-translate the dataset using the zero-shot or the few-shot by opening the LLM based approach in the notebook.
  
- - **Run the transformer based approach**
- You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the transformer based aproach section.
+ - **Run the Transformer-based Approach**
+ You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the  transformer based aproach section.
  
  <img src="./images/sft.png" alt="transformer" width="800" height = "400" />
  
- - **Run the LLM as a judge**
- You can try our tournament selection and absolute evaluations in the LLM as a judge section.
+ - **Run the LLM-as-a-Judge**
+ You can try our tournament selection and absolute evaluations in the LLM-as-a-Judge section.
 
 4. **(Optional) Change the `config.yaml`**
 You can change:
