@@ -19,7 +19,7 @@ It is needed to run the LLMs used for the translations.
 Go to https://console.groq.com/keys. 
 Do the login and click on "Create API Key" in the top right corner.
 
-<img src="./images/groq-api.png" alt="groq" width="400" height = "300" align = "center" />
+<img src="./images/groq-api.png" alt="groq" width="300" height = "200" align = "center" />
 
 3. **Open in Colab `hw2_Romano_LissaLattanzio`:**
 
