@@ -14,21 +14,24 @@ git clone "https://github.com/cybernetic-m/archaicIT2modernIT.git"
  ```
 
 2. **Make a Groq API Key**:
-It is needed to run the LLMs used for the translations. Go to https://console.groq.com/keys. Do the login and click on "create api key" in the top right corner.
+   
+It is needed to run the LLMs used for the translations. 
+Go to https://console.groq.com/keys. 
+Do the login and click on "Create Api Key" in the top right corner.
 <img src="./images/groq-api.png" alt="groq" width="400" height = "300" align = "center" />
 
 3. **Open in colab hw2_Romano_LissaLattanzio":**
 
 There you can try to:
- 1. **Run the LLM based approach**
+ - **Run the LLM based approach**
  You can try to re-translate the dataset using the zero-shot or the few-shot by opening the LLM based approach in the notebook.
  
- 2. **Run the transformer based approach**
+ - **Run the transformer based approach**
  You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the transformer based aproach section.
  
  <img src="./images/sft.png" alt="transformer" width="800" height = "400" />
  
- 3. **Run the LLM as a judge**
+ - **Run the LLM as a judge**
  You can try our tournament selection and absolute evaluations in the LLM as a judge section.
 
 4. **(Optional) Change the `config.yaml`**
