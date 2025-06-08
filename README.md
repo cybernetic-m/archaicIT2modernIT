@@ -14,19 +14,28 @@ git clone "https://github.com/cybernetic-m/archaicIT2modernIT.git"
  ```
 
 2. **Make a Groq API Key**:
-It is needed to run the LLMs used for the translations.
+It is needed to run the LLMs used for the translations. Go to https://console.groq.com/keys. Do the login and click on "create api key" in the top right corner.
 
-3. **Run the LLM based approach**
-You can try to re-translate the dataset using the zero-shot or the few-shot by opening the LLM based approach in the notebook.
+3. **Open in colab hw2_Romano_LissaLattanzio":
 
-4. **Run the transformer based approach**
-You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the transformer based aproach section.
+There you can try to:
+ 1. **Run the LLM based approach**
+ You can try to re-translate the dataset using the zero-shot or the few-shot by opening the LLM based approach in the notebook.
+ 
+ 2. **Run the transformer based approach**
+ You can try the fine tuning of the transformer and the translation using the non fine tuned and fine tuned transformers in the transformer based aproach section.
+ 
+ <img src="./images/sft.png" alt="transformer" width="800" height = "400" />
+ 
+ 3. **Run the LLM as a judge**
+ You can try our tournament selection and absolute evaluations in the LLM as a judge section.
 
-<img src="./images/sft.png" alt="transformer" width="800" height = "400" />
-
-5. **Run the LLM as a judge**
-You can try our tournament selection and absolute evaluations in the LLM as a judge section.
-
+ 4. **(Optional) Change the config.yaml**
+    You can:
+    - Change the models and temperatures
+    - Change the system and user prompt for italian and english language
+    - Change the system and user prompt of prometheus for the relative setting and absolute vote setting
+    - Change the rubrics descriptions
 
 # ☁️ TAs GDrive Shared Folder ☁️
 
